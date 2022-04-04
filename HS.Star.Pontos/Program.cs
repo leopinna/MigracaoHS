@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using HS.Star.Pontos;
 
 var builder = WebApplication.CreateBuilder(args);
-string url = builder.Configuration.GetConnectionString("EndereçoProdução");
+string url = builder.Configuration.GetValue<string>("UrlDeploy:PROD");
 
 // Add services to the container.
 
@@ -18,25 +18,23 @@ builder.Services.AddSwaggerGen((config =>
                             })
   );
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    url = builder.Configuration.GetConnectionString("EndereçoDSV");
+    url = builder.Configuration.GetValue<string>("UrlDeploy:DSV");
 }
 
 app.UseSwagger();
+app.UseSwaggerUI(config =>
+                {
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "Pontos Star - Valor Ponto");
+                    config.RoutePrefix = "";
+                });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwaggerUI(config =>
-                    {
-                        config.SwaggerEndpoint("/swagger/v1/swagger.json", "Pontos Star - Valor Ponto");
-                        config.RoutePrefix = "";
-                    });
-}
 
 //app.UseHttpsRedirection();
 
@@ -45,7 +43,7 @@ if (app.Environment.IsDevelopment())
 string cs = builder.Configuration.GetConnectionString("ORCL");
 
 
-app.MapGet("/pontos",() =>
+app.MapGet("Pontos/GetAll",() =>
     {
         ValorPontoLojaHelper x = new ValorPontoLojaHelper();
         return x.Pontos(cs, String.Empty).ToArray();
@@ -53,7 +51,7 @@ app.MapGet("/pontos",() =>
 ).WithName("GetAll")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
 
-app.MapGet("/pontos/{ccusto}", (string ccusto) =>
+app.MapGet("Pontos/GetByCcusto/{ccusto}", (string ccusto) =>
     {
         ValorPontoLojaHelper x = new ValorPontoLojaHelper();
         return x.Pontos(cs, String.Format("and ccusto_gl_cod = '{0}'", ccusto)).ToArray();
@@ -61,21 +59,22 @@ app.MapGet("/pontos/{ccusto}", (string ccusto) =>
 ).WithName("GetByCcusto")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
 
-app.MapGet("/pontos/ccusto/{ccusto}/ano/{ano}/mes/{mes}", async (string ccusto, int ano, int mes) =>
+app.MapGet("Pontos/GetByCcustoAnoMes/ccusto/{ccusto}/ano/{ano}/mes/{mes}", async (string ccusto, int ano, int mes) =>
     {
         List<ValorPontoLoja> ListaPontos = new List<ValorPontoLoja>();
         using (var client = new HttpClient())
         {
-
-            client.BaseAddress = new Uri(url);
+            
+            client.BaseAddress = new Uri("http://localhost:5010/");
             client.DefaultRequestHeaders.Clear();
 
-            HttpResponseMessage Res = await client.GetAsync("pontos/GetByCcusto");
+            HttpResponseMessage Res = await client.GetAsync("Pontos/GetByCcusto/"+ccusto);
 
             if (Res.IsSuccessStatusCode)
             {
-                var resposta = Res.Content.ReadAsStringAsync().Result;
-                ListaPontos = JsonSerializer.Deserialize<List<ValorPontoLoja>>(resposta);
+                //var resposta = Res.Content.ReadAsStringAsync().Result;
+                ListaPontos = await Res.Content.ReadFromJsonAsync<List<ValorPontoLoja>>();
+                //ListaPontos = JsonSerializer.Deserialize<List<ValorPontoLoja>>(resposta);
                 return ListaPontos is not null? ListaPontos.Where(x => x.AnoInicioVigenciaNum == ano && x.MesInicioVigenciaNum == mes) : null;
             }
             return null;

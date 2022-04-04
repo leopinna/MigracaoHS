@@ -16,6 +16,7 @@ internal class ValorPontoLojaHelper
             con.Open();
 
             var aux = con.Query<ValorPontoLoja>(queryBase).ToList();
+
             con.Close();
 
             return aux;
