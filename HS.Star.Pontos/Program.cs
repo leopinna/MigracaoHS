@@ -1,5 +1,3 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using HS.Star.Pontos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +38,7 @@ app.UseSwaggerUI(config =>
 
 //app.UseAuthorization();
 
+# region "Mapeamentos"
 string cs = builder.Configuration.GetConnectionString("ORCL");
 
 
@@ -59,28 +58,27 @@ app.MapGet("Pontos/GetByCcusto/{ccusto}", (string ccusto) =>
 ).WithName("GetByCcusto")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
 
-app.MapGet("Pontos/GetByCcustoAnoMes/ccusto/{ccusto}/ano/{ano}/mes/{mes}", async (string ccusto, int ano, int mes) =>
+app.MapGet("Pontos/GetByCcustoAnoMes/{ccusto}/{ano}/{mes}", async (string ccusto, int ano, int mes) =>
     {
         List<ValorPontoLoja> ListaPontos = new List<ValorPontoLoja>();
         using (var client = new HttpClient())
         {
             
-            client.BaseAddress = new Uri("http://localhost:5010/");
+            client.BaseAddress = new Uri("http://"+url+":5010/");
             client.DefaultRequestHeaders.Clear();
 
             HttpResponseMessage Res = await client.GetAsync("Pontos/GetByCcusto/"+ccusto);
 
             if (Res.IsSuccessStatusCode)
             {
-                //var resposta = Res.Content.ReadAsStringAsync().Result;
                 ListaPontos = await Res.Content.ReadFromJsonAsync<List<ValorPontoLoja>>();
-                //ListaPontos = JsonSerializer.Deserialize<List<ValorPontoLoja>>(resposta);
                 return ListaPontos is not null? ListaPontos.Where(x => x.AnoInicioVigenciaNum == ano && x.MesInicioVigenciaNum == mes) : null;
             }
             return null;
         }
     }).WithName("GetByCcustoAnoMes")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
+# endregion "Mapeamentos"
 
 //app.MapControllers();
 app.Run();

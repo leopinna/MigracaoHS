@@ -1,5 +1,4 @@
 namespace HS.Star.Pontos;
-using System.ComponentModel.DataAnnotations.Schema;
 
 public class ValorPontoLoja
 {
