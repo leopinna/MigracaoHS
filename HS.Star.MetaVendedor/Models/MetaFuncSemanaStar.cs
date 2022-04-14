@@ -27,5 +27,6 @@ namespace HS.Star.MetaVendedor.Models
         public int UsuarioUltAtualNum { get; set; }
 
         public virtual ICollection<MetaFuncQuadroHora> MetaFuncQuadroHoras { get; set; } = default!;
+        public virtual ICollection<RegDiarioFuncStar> RegDiarioFuncStars {get; set;} = default!;
     }
 }
