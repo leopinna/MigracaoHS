@@ -41,7 +41,7 @@ namespace HS.Star.MetaVendedor.Models
 
                 entity.ToTable("meta_func_quadro_horas", "HS");
 
-                entity.Property(e => e.MetaFuncQuadroHorasId).HasColumnName("meta_func_quadro_horas_id");
+                entity.Property(e => e.MetaFuncQuadroHorasId).HasColumnName("meta_func_quadro_horas_id").UseSerialColumn();
 
                 entity.Property(e => e.Dia).HasColumnName("dia");
 
@@ -62,14 +62,17 @@ namespace HS.Star.MetaVendedor.Models
                 entity.Property(e => e.UsuarioInclNum).HasColumnName("usuario_incl_num");
 
                 entity.Property(e => e.UsuarioUltAtualNum).HasColumnName("usuario_ult_atual_num");
+//teste
+                //entity.Navigation(e => e.MetaFuncSemanaStar);
 
-                /* entity.HasOne(d => d.MetaFuncSemanaStar)
-                    .WithMany(p => p.MetaFuncQuadroHoras)
-                    .HasForeignKey(d => d.MetaFuncSemanaStarId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("meta_func_quadro_hora_fk01"); */
+                //  entity.HasOne(d => d.MetaFuncSemanaStarId)
+                //     .WithMany(p => p.MetaFuncQuadroHoras)
+                //     .HasForeignKey(d => d.MetaFuncSemanaStarId)
+                //     .OnDelete(DeleteBehavior.ClientSetNull)
+                //     .HasConstraintName("meta_func_quadro_hora_fk01"); 
             });
 
+            //modelBuilder.Entity<MetaFuncSemanaStar>().HasMany(d=> d.MetaFuncQuadroHoras);
             modelBuilder.Entity<MetaFuncSemanaStar>(entity =>
             {
                 entity.ToTable("meta_func_semana_star", "HS");
@@ -77,7 +80,7 @@ namespace HS.Star.MetaVendedor.Models
                 entity.HasIndex(e => new { e.CcustoGlCod, e.FuncNum, e.AnoNum, e.SemanaNum }, "meta_func_semana_star_uk")
                     .IsUnique();
 
-                entity.Property(e => e.MetaFuncSemanaStarId).HasColumnName("meta_func_semana_star_id");
+                entity.Property(e => e.MetaFuncSemanaStarId).HasColumnName("meta_func_semana_star_id").UseSerialColumn();
 
                 entity.Property(e => e.AnoNum).HasColumnName("ano_num");
 
@@ -108,6 +111,9 @@ namespace HS.Star.MetaVendedor.Models
                 entity.Property(e => e.UsuarioInclNum).HasColumnName("usuario_incl_num");
 
                 entity.Property(e => e.UsuarioUltAtualNum).HasColumnName("usuario_ult_atual_num");
+
+                //entity.HasMany(q => q.MetaFuncQuadroHoras);
+                entity.Navigation(e => e.MetaFuncQuadroHoras).AutoInclude();
             });
 
             //OnModelCreatingPartial(modelBuilder);

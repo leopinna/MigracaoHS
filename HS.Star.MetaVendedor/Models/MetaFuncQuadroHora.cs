@@ -16,6 +16,6 @@ namespace HS.Star.MetaVendedor.Models
         public int UsuarioUltAtualNum { get; set; }
         public int MetaFuncSemanaStarId { get; set; }
 
-        //public virtual MetaFuncSemanaStar MetaFuncSemanaStar { get; set; } = null!;
+       // public virtual MetaFuncSemanaStar MetaFuncSemanaStar { get; set; } = null!;
     }
 }

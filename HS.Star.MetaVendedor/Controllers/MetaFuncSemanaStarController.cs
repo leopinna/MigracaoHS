@@ -18,10 +18,10 @@ public class MetaFuncSemanaStarController : Controller
     }
 
     public class Parametros{
-        public int funcNum { get; set; }
-        public string? ccustoGlCod { get; set; }
-        public int ano { get; set; }
-        public int semana { get; set; }
+        public int FuncNum { get; set; }
+        public string? CcustoGlCod { get; set; }
+        public int Ano { get; set; }
+        public int Semana { get; set; }
     }
 
     /// <summary>
@@ -38,22 +38,22 @@ public class MetaFuncSemanaStarController : Controller
     /// </remarks>
     [HttpPost]
     [Route("/GetMetaVendedor")]
-    public  async Task<ActionResult<IList<MetaFuncSemanaStar>>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
+    public async  Task<ActionResult<IList<MetaFuncSemanaStar>>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
     {
-        
         var xpto =  _metaContext.MetaFuncSemanaStars
-                    .Where(m => (m.FuncNum == parametros.funcNum) &&
-                                m.AnoNum == parametros.ano &&
-                                m.CcustoGlCod == parametros.ccustoGlCod &&
-                                m.SemanaNum == parametros.semana).ToList();
-
+                    .Where(m => (m.FuncNum == parametros.FuncNum) &&
+                                m.AnoNum == parametros.Ano &&
+                                m.CcustoGlCod == parametros.CcustoGlCod &&
+                                m.SemanaNum == parametros.Semana)
+                    .ToList();
 
         return xpto is null?  NotFound(StatusCodes.Status400BadRequest) : Ok(xpto);
     }
 
+
     [HttpPost]
     [Route("/Metas")]
-    public async Task<ActionResult> PostMeta([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
+    public async Task<ActionResult> CadastrarHoraPrevista([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
     {
         await _metaContext.MetaFuncSemanaStars.AddRangeAsync(metaFuncSemana);
         await _metaContext.SaveChangesAsync();
@@ -66,7 +66,7 @@ public class MetaFuncSemanaStarController : Controller
     {
         try
         {
-           return _metaContext.MetaFuncSemanaStars.FirstOrDefault() is not null ? "Sucesso" : "A tabe META pode estar vazia.";
+           return _metaContext.MetaFuncSemanaStars.FirstOrDefault() is not null ? "Sucesso" : "A tabela META pode estar vazia.";
         }
         catch (System.Exception ex) 
         {

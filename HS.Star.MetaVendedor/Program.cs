@@ -35,7 +35,6 @@ app.UseSwaggerUI(config =>
                     config.RoutePrefix = "/MetaVendedor";
                 });
 
-app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
 

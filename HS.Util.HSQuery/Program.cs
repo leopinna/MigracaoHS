@@ -23,14 +23,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     url = builder.Configuration.GetValue<string>("UrlDeploy:DSV");
+    app.UseSwaggerUI(config =>
+                    {
+                        config.SwaggerEndpoint("/swagger/v1/swagger.json", "HS Query");
+                        config.RoutePrefix = "";
+                    });
 }
 
 app.UseSwagger();
-app.UseSwaggerUI(config =>
-                {
-                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "HS Query");
-                    config.RoutePrefix = "";
-                });
+
 
 
 //app.UseHttpsRedirection();

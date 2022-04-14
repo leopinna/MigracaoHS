@@ -8,8 +8,8 @@ internal class QueryHelper
         using (var con = new Oracle.ManagedDataAccess.Client.OracleConnection(conn_string))
         {
 
-            if (SQL.Substring(1, 6).ToUpper() != "SELECT")
-                throw new ArgumentException("Tenta de Novo. Esse SQL está errado");
+            if (!SQL.Substring(0, 6).ToUpper().Equals("SELECT"))
+                throw new ArgumentException("Tenta de Novo. Esse SQL está errado.'"+SQL.Substring(0, 6).ToUpper()+"'");
 
 
 
