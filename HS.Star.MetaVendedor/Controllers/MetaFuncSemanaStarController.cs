@@ -51,13 +51,30 @@ public class MetaFuncSemanaStarController : Controller
     }
 
 
+    /// <summary>
+    ///     Cadastra as horas semanais de cada vendedor. Pode ser enviado
+    ///     mais de um registro simultaneamente
+    /// </summary>
+    /// <remarks>
+    /// ex.:   List /<MetaFuncSemanaStar/>  
+    ///         veja modelo abaixo na área de parâmetros
+    ///  
+    /// </remarks>
     [HttpPost]
     [Route("/Metas")]
     public async Task<ActionResult> CadastrarHoraPrevista([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
     {
-        await _metaContext.MetaFuncSemanaStars.AddRangeAsync(metaFuncSemana);
-        await _metaContext.SaveChangesAsync();
-        return Ok();
+        try
+        {
+            await _metaContext.MetaFuncSemanaStars.AddRangeAsync(metaFuncSemana);
+            await _metaContext.SaveChangesAsync();
+            return Ok();       
+        }
+        catch (System.Exception)
+        {
+            return Problem();
+        }
+
     }
 
     [HttpGet]

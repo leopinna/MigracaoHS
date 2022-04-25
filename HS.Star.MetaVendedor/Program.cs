@@ -12,8 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen((config =>
-                            {
-                                config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Pontos Star - Meta Vendedor", Version="v1"});
+                            {   config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Pontos Star - Meta Vendedor", Version="v1"});
                                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                                 config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory.ToLower(), xmlFilename.ToLower()));
                             })

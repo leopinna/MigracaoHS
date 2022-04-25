@@ -3,6 +3,7 @@ using HS.Star.Pontos;
 
 internal class ValorPontoLojaHelper
 {
+///
     public List<ValorPontoLoja> Pontos(string conn_string, string predicado)
     {
         string queryBase = "SELECT ccusto_gl_cod CcustoGlCod, ano_inicio_vigencia_num AnoInicioVigenciaNum, "+

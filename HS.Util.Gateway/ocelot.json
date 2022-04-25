@@ -1,0 +1,31 @@
+{
+"GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration",
+    "BaseUrl": "https://localhost:800"
+  },
+"Routes": [
+    {
+      "DownstreamPathTemplate": "/Pontos/GetAll",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts":[
+      {
+    "Host": "localhost",  
+     "Port": 5010
+      }],
+      "UpstreamPathTemplate": "/Pontos/GetAll",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+        {
+      "DownstreamPathTemplate": "/Pontos/GetByCcusto/{all}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts":[
+      {
+    "Host": "localhost",  
+     "Port": 5010
+      }],
+      "UpstreamPathTemplate": "/Pontos/GetByCcusto/{all}",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+]
+}
