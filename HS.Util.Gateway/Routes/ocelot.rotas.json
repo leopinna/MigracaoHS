@@ -1,0 +1,65 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Pontos/GetAll",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "Pontos",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ],
+      "UpstreamPathTemplate": "/Pontos/GetAll",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/Pontos/GetByCcusto/{all}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "PontosCcusto",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ],
+      "UpstreamPathTemplate": "/Pontos/GetByCcusto/{all}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/Pontos/GetByCcustoAnoMes/{all}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "PontosAnoMes",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ],
+      "UpstreamPathTemplate": "/Pontos/GetByCcustoAnoMes/{all}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    }
+,
+    {
+      "DownstreamPathTemplate": "/api/Query/{all}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "Query",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "4000"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Query/{all}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    }    
+  ]
+}

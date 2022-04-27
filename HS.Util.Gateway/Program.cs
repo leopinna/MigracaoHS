@@ -1,75 +1,55 @@
-using Ocelot.Cache.CacheManager;
+using MMLib.SwaggerForOcelot.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-//using Ocelot.Provider.Eureka;
-namespace Microsoft.AspNetCore.Hosting;
+using Ocelot.Provider.Polly;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+var routes = "Routes";
+
+builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 {
-    public static void Main(string[] args)
-    {
-        BuildWebHost(args).Run();
-    }
+    options.Folder = routes;
+});
 
-    public static IWebHost BuildWebHost(string[] args)
-    {
-        return WebHost.CreateDefaultBuilder(args)
-            .UseUrls("http://localhost:800")
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                config
-                    .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                    .AddJsonFile("appsettings.json", true, true)
-                    .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
-                        true)
-                    .AddJsonFile("ocelot.json", false, false)
-                    .AddEnvironmentVariables();
-            })
-            .ConfigureServices(s =>
-            {
-                s.AddOcelot().AddCacheManager(x => x.WithDictionaryHandle());
-                //.AddEureka()
-            })
-            .Configure(a =>
-            {
-                a.UseOcelot().Wait();
-            })
-            .Build();
-    }
+builder.Services.AddOcelot(builder.Configuration).AddPolly();
+builder.Services.AddSwaggerForOcelot(builder.Configuration);
+
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+    .AddOcelot(routes, builder.Environment)
+    .AddEnvironmentVariables();
+
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+
+// Swagger for ocelot
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
 }
 
-/*public class Program
+
+//app.UseHttpsRedirection();
+
+//app.UseAuthorization();
+
+app.UseSwaggerForOcelotUI(options =>
 {
-    public static void Main(string[] args)
-    {
-        new WebHostBuilder()
-        .UseKestrel()
-        .UseContentRoot(Directory.GetCurrentDirectory())
-        .UseUrls("http://localhost:8000")
-        .ConfigureAppConfiguration((hostingContext, config) =>
-        {
-            config
-                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                .AddJsonFile("ocelot.json",false, true)
-                .AddEnvironmentVariables();
-        })
-        .ConfigureServices(s =>
-        {
-            s.AddOcelot();//.AddEureka();
-        })
-        .ConfigureLogging((hostingContext, logging) =>
-        {
-                //add your logging
-        })
-        //.UseIISIntegration()
-        .Configure(app =>
-        {
-            app.UseOcelot();//.Wait();
-            
-        })
-        .Build()
-        .Run();
-    }
-}*/
+    options.PathToSwaggerGenerator = "/swagger/docs";
+    options.RoutePrefix = "";
+
+}).UseOcelot().Wait();
+
+app.MapControllers();
+
+app.Run();
