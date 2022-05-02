@@ -38,29 +38,23 @@ app.UseSwaggerUI(config =>
 
 //app.UseAuthorization();
 
+
+
 # region "Mapeamentos"
-string cs = builder.Configuration.GetConnectionString("ORCL");
+ValorPontoLojaHelper helper = new ValorPontoLojaHelper();
+helper.ConnString = builder.Configuration.GetConnectionString("ORCL");
 
-
-app.MapGet("Pontos/GetAll",() =>
-    {
-        ValorPontoLojaHelper x = new ValorPontoLojaHelper();
-        return x.Pontos(cs, String.Empty).ToArray();
-    }       
-).WithName("GetAll")
-.Produces<ValorPontoLoja>(StatusCodes.Status200OK);
 
 app.MapGet("Pontos/GetByCcusto/{ccusto}", (string ccusto) =>
     {
-        ValorPontoLojaHelper x = new ValorPontoLojaHelper();
-        return x.Pontos(cs, String.Format("and ccusto_gl_cod = '{0}'", ccusto)).ToArray();
+        return helper.Pontos(String.Format("and ccusto_gl_cod = '{0}'", ccusto)).ToArray();
     }
 ).WithName("GetByCcusto")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
 
 app.MapGet("Pontos/GetByCcustoAnoMes/{ccusto}/{ano}/{mes}", async (string ccusto, int ano, int mes) =>
     {
-        List<ValorPontoLoja> ListaPontos = new List<ValorPontoLoja>();
+        List<ValorPontoLoja>? ListaPontos = new List<ValorPontoLoja>();
         using (var client = new HttpClient())
         {
             
@@ -78,6 +72,18 @@ app.MapGet("Pontos/GetByCcustoAnoMes/{ccusto}/{ano}/{mes}", async (string ccusto
         }
     }).WithName("GetByCcustoAnoMes")
 .Produces<ValorPontoLoja>(StatusCodes.Status200OK);
+
+app.MapGet("Pontos/ConverteValorEmPontos/{ccusto}/{ano}/{mes}/{valor}", (string ccusto, int ano, int mes, double valor) =>
+    {        
+        return helper.ConverteValorEmPonto(ccusto, ano, mes, valor);
+    }).WithName("ConverteValorEmPontos")
+.Produces<double>(StatusCodes.Status200OK);
+
+app.MapGet("Pontos/ConvertePontosEmValor/{ccusto}/{ano}/{mes}/{valor}", (string ccusto, int ano, int mes, double valor) =>
+    {
+        return helper.ConvertePontoEmValor(ccusto, ano, mes, valor);
+    }).WithName("ConverteValorEmPontos")
+.Produces<double>(StatusCodes.Status200OK);
 # endregion "Mapeamentos"
 
 //app.MapControllers();
