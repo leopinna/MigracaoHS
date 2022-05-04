@@ -79,10 +79,10 @@ app.MapGet("Pontos/ConverteValorEmPontos/{ccusto}/{ano}/{mes}/{valor}", (string 
     }).WithName("ConverteValorEmPontos")
 .Produces<double>(StatusCodes.Status200OK);
 
-app.MapGet("Pontos/ConvertePontosEmValor/{ccusto}/{ano}/{mes}/{valor}", (string ccusto, int ano, int mes, double valor) =>
+app.MapGet("Pontos/ConvertePontosEmValor/{ccusto}/{ano}/{mes}/{pontos}", (string ccusto, int ano, int mes, double pontos) =>
     {
-        return helper.ConvertePontoEmValor(ccusto, ano, mes, valor);
-    }).WithName("ConverteValorEmPontos")
+        return helper.ConvertePontoEmValor(ccusto, ano, mes, pontos);
+    }).WithName("ConvertePontosEmValor")
 .Produces<double>(StatusCodes.Status200OK);
 # endregion "Mapeamentos"
 
