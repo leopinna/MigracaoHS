@@ -5,7 +5,7 @@ namespace HS.Star.MetaVendedor.Models
 {
     public partial class RegDiarioFuncStar
     {
-        public int RegDiarioFuncStarId { get; set; }
+        public int RegDiarioFuncStarId { get; set; } 
         public DateOnly DtAtendimento { get; set; }
         public int MetaFuncSemanaStarId { get; set; }
         public int QtdApproaches { get; set; }
