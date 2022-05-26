@@ -1,18 +1,6 @@
 // ** React Imports
-import { Fragment } from 'react'
-
-// ** Routes Imports
-import AppRoutes from './Apps'
-import FormRoutes from './Forms'
-import PagesRoutes from './Pages'
-import TablesRoutes from './Tables'
-import ChartsRoutes from './Charts'
-import DashboardRoutes from './Dashboards'
-import UiElementRoutes from './UiElements'
-import ExtensionsRoutes from './Extensions'
-import PageLayoutsRoutes from './PageLayouts'
-import AuthenticationRoutes from './Authentication'
-
+import { Fragment, lazy } from 'react'
+import { Navigate } from 'react-router-dom'
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
@@ -21,7 +9,6 @@ import LayoutWrapper from '@src/@core/layouts/components/layout-wrapper'
 
 // ** Route Components
 import PublicRoute from '@components/routes/PublicRoute'
-import PrivateRoute from '@components/routes/PrivateRoute'
 
 // ** Utils
 import { isObjEmpty } from '@utils'
@@ -33,23 +20,67 @@ const getLayout = {
 }
 
 // ** Document title
-const TemplateTitle = '%s - Vuexy React Admin Template'
+const TemplateTitle = '%s - HSTERN'
 
 // ** Default Route
-const DefaultRoute = '/dashboard/ecommerce'
+const DefaultRoute = '/home'
+
+const Home = lazy(() => import('../../views/Home'))
+const SecondPage = lazy(() => import('../../views/SecondPage'))
+const Login = lazy(() => import('../../views/Login'))
+const Register = lazy(() => import('../../views/Register'))
+const ForgotPassword = lazy(() => import('../../views/ForgotPassword'))
+const Error = lazy(() => import('../../views/Error'))
+
+const StarTimeSheet = lazy(() => import('../../views/StarTimeSheet'))
 
 // ** Merge Routes
 const Routes = [
-  ...AuthenticationRoutes,
-  ...DashboardRoutes,
-  ...AppRoutes,
-  ...PagesRoutes,
-  ...UiElementRoutes,
-  ...ExtensionsRoutes,
-  ...PageLayoutsRoutes,
-  ...FormRoutes,
-  ...TablesRoutes,
-  ...ChartsRoutes
+  {
+    path: '/StarTimeSheet',
+    element: <StarTimeSheet />
+  },
+  {
+    path: '/',
+    index: true,
+    element: <Navigate replace to={DefaultRoute} />
+  },
+  {
+    path: '/home',
+    element: <Home />
+  },
+  {
+    path: '/second-page',
+    element: <SecondPage />
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    meta: {
+      layout: 'blank'
+    }
+  },
+  {
+    path: '/register',
+    element: <Register />,
+    meta: {
+      layout: 'blank'
+    }
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+    meta: {
+      layout: 'blank'
+    }
+  },
+  {
+    path: '/error',
+    element: <Error />,
+    meta: {
+      layout: 'blank'
+    }
+  }
 ]
 
 const getRouteMeta = route => {
@@ -74,12 +105,11 @@ const MergeLayoutRoutes = (layout, defaultLayout) => {
         (route.meta && route.meta.layout && route.meta.layout === layout) ||
         ((route.meta === undefined || route.meta.layout === undefined) && defaultLayout === layout)
       ) {
-        let RouteTag = PrivateRoute
+        const RouteTag = PublicRoute
 
         // ** Check for public or private route
         if (route.meta) {
           route.meta.layout === 'blank' ? (isBlank = true) : (isBlank = false)
-          RouteTag = route.meta.publicRoute ? PublicRoute : PrivateRoute
         }
         if (route.element) {
           const Wrapper =

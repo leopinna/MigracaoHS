@@ -36,8 +36,8 @@ public class MetaFuncSemanaStarController : Controller
     ///     "semana": 1
     /// } 
     /// </remarks>
-    [HttpPost]
-    [Route("/GetMetaVendedor")]
+    [HttpGet]
+    [Route("Metas/GetMetaVendedor")]
     public async  Task<ActionResult<IList<MetaFuncSemanaStar>>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
     {
         var xpto =  _metaContext.MetaFuncSemanaStars
@@ -61,8 +61,8 @@ public class MetaFuncSemanaStarController : Controller
     ///  
     /// </remarks>
     [HttpPost]
-    [Route("/Metas")]
-    public async Task<ActionResult> CadastrarHoraPrevista([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
+    [Route("Metas/AtualizaQuadroHoras")]
+    public async Task<ActionResult> CadastraHoraPrevista([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
     {
         try
         {
@@ -75,6 +75,26 @@ public class MetaFuncSemanaStarController : Controller
             return Problem();
         }
 
+    }
+
+    /// <summary>
+    ///     Grava as alterações realizadada no quadro de horas
+    /// </summary>
+    /// <remarks>
+    ///   
+    /// } 
+    /// </remarks>
+    [HttpGet]
+    [Route("/GetQuadroHoras")]
+    public async  Task<ActionResult<IList<MetaFuncSemanaStar>>> QuadroHorasPrevistas( [FromBody] Parametros parametros)
+    {
+        var xpto =  _metaContext.MetaFuncSemanaStars
+                    .Where(m => m.AnoNum == parametros.Ano &&
+                                m.CcustoGlCod == parametros.CcustoGlCod &&
+                                m.SemanaNum == parametros.Semana)
+                    .ToList();
+
+        return xpto is null?  NotFound(StatusCodes.Status400BadRequest) : Ok(xpto);
     }
 
     [HttpGet]

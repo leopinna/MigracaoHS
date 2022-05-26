@@ -9,3 +9,30 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+.autocomplete-container{
+	padding: 1.5em;
+	display: block;
+}
+
+.lov{
+	font-weight: bold;
+	font-style: 0.857rem;
+	letter-spacing: 0.5px;
+	height: 1.5rem;
+	padding: 5px;
+	display: block;
+}
+
+.rdt_Table{
+	padding: 0 25px 0 25px;
+}
+
+.rdt_TableCell{
+	border-right: 1px solid lightgrey;
+	text-align: center;
+}
+
+.rdt_TableRow:last-child{
+		border-bottom: 1px solid lightgrey;
+
+}

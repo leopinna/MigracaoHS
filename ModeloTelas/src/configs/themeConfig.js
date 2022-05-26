@@ -3,7 +3,7 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
+    appName: 'H Stern',
     appLogoImage: require('@src/assets/images/logo/logo.svg').default
   },
   layout: {
@@ -18,15 +18,15 @@ const themeConfig = {
     },
     navbar: {
       // ? For horizontal menu, navbar type will work for navMenu type
-      type: 'floating', // static , sticky , floating, hidden
-      backgroundColor: 'white' // BS color options [primary, success, etc]
+      type: 'floating' // static , sticky , floating, hidden
+      //backgroundColor: 'primary' // BS color options [primary, success, etc]
     },
     footer: {
       type: 'static' // static, sticky, hidden
     },
     customizer: false,
-    scrollTop: true, // Enable scroll to top button,
-    toastPosition: 'top-right' // top-left, top-center, top-right, bottom-left, bottom-center, bottom-right
+    scrollTop: true, // Enable scroll to top button
+    toastPosition: 'top-right'
   }
 }
 

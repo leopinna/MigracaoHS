@@ -5,6 +5,8 @@ module.exports = {
     browser: true
   },
 
+  parser: "@babel/eslint-parser",
+
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
@@ -30,7 +32,7 @@ module.exports = {
     // 'init-declarations': 'error',
     'no-use-before-define': 'error',
 
-    'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    'no-unused-vars': ['off', { varsIgnorePattern: '^[A-Z]' }],
 
     // Stylistic Issues
     'array-bracket-newline': ['error', { multiline: true, minItems: null }],

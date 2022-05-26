@@ -5,11 +5,12 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="MMLib.SwaggerForOcelot" Version="5.1.0"/>
-		<PackageReference Include="ocelot" Version="18.0.0"/>
-		<PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0"/>
+		<PackageReference Include="MMLib.SwaggerForOcelot" Version="5.1.0" />
+		<PackageReference Include="ocelot" Version="18.0.0" />
+		<PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0" />
 		<PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0" />
 		<PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		
 	</ItemGroup>
 </Project>

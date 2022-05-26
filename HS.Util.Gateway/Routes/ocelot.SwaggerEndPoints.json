@@ -24,12 +24,12 @@
     },
     {
       "Key": "location",
-      "TransformByOcelotConfig": true,
+      "TransformByOcelotConfig": false,
       "Config": [
         {
-          "Name": "Location.API",
-          "Version": "1.0",
-          "Url": "http://localhost:5020/location/swagger/v1/swagger.json"
+          "Name": "Calendário Star",
+          "Version": "v1",
+          "Url": "http://localhost:5020/swagger/swagger/v1/swagger.json"
         }
       ]
     }

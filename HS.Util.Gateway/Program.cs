@@ -14,6 +14,15 @@ builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 
 builder.Services.AddOcelot(builder.Configuration).AddPolly();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
+builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy(name: "API_CORS", b =>
+            {
+                b.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
@@ -31,6 +40,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("API_CORS");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

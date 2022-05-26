@@ -15,6 +15,15 @@ builder.Services.AddSwaggerGen((config =>
                             })
   );
 
+builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy(name: "API_CORS", b =>
+            {
+                b.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
 
 var app = builder.Build();
 
@@ -31,6 +40,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
+app.UseCors("API_CORS");
 
 
 
@@ -43,33 +53,13 @@ string cs = builder.Configuration.GetConnectionString("ORCL");
 
 
 
-app.MapGet("api/Query/{SQL}", (string SQL) =>
+app.MapGet("HSQuery/{SQL}", (string SQL) =>
     {
         QueryHelper x = new QueryHelper();
         return x.ExecutaQuery(SQL, cs).ToList();
     }
 );
 
-/* app.MapGet("Pontos/GetByCcustoAnoMes/{ccusto}/{ano}/{mes}", async (string ccusto, int ano, int mes) =>
-    {
-        List<ValorPontoLoja> ListaPontos = new List<ValorPontoLoja>();
-        using (var client = new HttpClient())
-        {
-            
-            client.BaseAddress = new Uri("http://"+url+":5010/");
-            client.DefaultRequestHeaders.Clear();
-
-            HttpResponseMessage Res = await client.GetAsync("Pontos/GetByCcusto/"+ccusto);
-
-            if (Res.IsSuccessStatusCode)
-            {
-                ListaPontos = await Res.Content.ReadFromJsonAsync<List<ValorPontoLoja>>();
-                return ListaPontos is not null? ListaPontos.Where(x => x.AnoInicioVigenciaNum == ano && x.MesInicioVigenciaNum == mes) : null;
-            }
-            return null;
-        }
-    }).WithName("GetByCcustoAnoMes")
-.Produces<ValorPontoLoja>(StatusCodes.Status200OK); */
 # endregion "Mapeamentos"
 
 //app.MapControllers();
