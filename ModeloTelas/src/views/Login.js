@@ -42,7 +42,6 @@ const ToastContent = ({ t, name, role }) => {
           <h6>{name}</h6>
           <X size={12} className='cursor-pointer' onClick={() => toast.dismiss(t.id)} />
         </div>
-        <span>You have successfully logged in as an {role} user to Vuexy. Now you can start to explore. Enjoy!</span>
       </div>
     </div>
   )
@@ -54,7 +53,7 @@ const defaultValues = {
 }
 
 const horaAtual = new Date().getHours()
-const saudacao = horaAtual > 11 && horaAtual < 18 ? 'Boa Tarde!' : horaAtual >= 0 && horaAtual <= 11 ? 'Bom Dia!' : 'Boa Noite!'
+const saudacao = horaAtual > 11 && horaAtual < 18 ? 'Boa tarde!' : horaAtual >= 0 && horaAtual <= 11 ? 'Bom dia!' : 'Boa noite!'
 
 const Login = () => {
   // ** Hooks
@@ -74,7 +73,7 @@ const Login = () => {
 
   const onSubmit = data => {
     if (Object.values(data).every(field => field.length > 0)) {
-      useJwt
+     { /* useJwt
         .login({ email: data.loginEmail, password: data.password })
         .then(res => {
           const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
@@ -86,7 +85,8 @@ const Login = () => {
             <ToastContent t={t} role={data.role || 'admin'} name={data.fullName || data.username || 'John Doe'} />
           ))
         })
-        .catch(err => console.log(err))
+      .catch(err => console.log(err))*/ }
+      navigate(getHomeRouteForLoggedInUser('usuario'))
     } else {
       for (const key in data) {
         if (data[key].length === 0) {

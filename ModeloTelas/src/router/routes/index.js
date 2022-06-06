@@ -20,7 +20,7 @@ const getLayout = {
 }
 
 // ** Document title
-const TemplateTitle = '%s - HSTERN'
+const TemplateTitle = 'Apps - HSTERN'
 
 // ** Default Route
 const DefaultRoute = '/home'

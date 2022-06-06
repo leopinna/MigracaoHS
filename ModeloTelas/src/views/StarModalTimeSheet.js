@@ -22,9 +22,10 @@ const StarModalTimeSheet = ({ open, handleModal }) => {
     <Modal
       isOpen={open}
       toggle={handleModal}
-      className='sidebar-sm'
-      modalClassName='modal-slide-in'
+     // className='sidebar-sm'
+      //modalClassName='modal-slide-in'
       contentClassName='pt-0'
+     // centered={true}
     >
       <ModalHeader className='mb-1' toggle={handleModal} close={CloseBtn} tag='div'>
         <h5 className='modal-title'>Alterar</h5>

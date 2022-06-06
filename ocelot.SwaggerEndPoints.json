@@ -1,0 +1,37 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "Pontos",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Pontos Star",
+          "Version": "v1",
+          "Url": "http://localhost:5010/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Query",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "HS Query",
+          "Version": "v1",
+          "Url": "http://localhost:4000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "CalendarioStar",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Calendario Star",
+          "Version": "v1",
+          "Url": "http://localhost:5020/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useState, forwardRef } from 'react'
+import { Fragment, useState, forwardRef, useEffect } from 'react'
 
 // ** Table Data & Columns
 import { data, columns } from '../APL/STAR/data'
@@ -11,7 +11,7 @@ import  {ListaLojas, dadosTS, cols} from '../APL/STAR/StarTimeSheetDados'
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, Plus, Calendar } from 'react-feather'
+import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, Plus, Calendar, Search } from 'react-feather'
 
 // ** Reactstrap Imports
 import {
@@ -35,14 +35,30 @@ const BootstrapCheckbox = forwardRef((props, ref) => (
   </div>
 ))
 
+const BaseURL = 'http://din512.hstern.com.br:4100/HSQuery/'
+const SelectListaLojas = "select%20c.praca_cod||' - '||c.sigla_cod%20sg%2Cc.descr_gl%20descr%2C%20ls.ccusto_gl_cod%20ccusto%2C%20c.praca_cod%20praca%20from%20hs.loja_star%20ls%2C%20ccusto%20c%20where%20ls.ccusto_gl_cod%20%253D%20c.ccusto_gl_cod%20and%20c.is_ativo%20%3D%20%27S%27%20order%20by%201"
+
 const StarTimeSheet = () => {
   // ** States
   const [modal, setModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
+  const [loj, setLoj] = useState([])
+  //const [loja, setLoja] = useState(null)
+
   console.log(data)
   //const [searchValue, setSearchValue] = useState('')
   //const [filteredData, setFilteredData] = useState([])
 
+  useEffect(() => {
+    (async () => {
+      const resp = await fetch(BaseURL.concat(SelectListaLojas))
+      const json = await resp.json()
+      setLoj(json)
+    })()
+  }, [])
+
+  console.log("LOJ:".concat(loj))
+  console.log(loj.keys)
   // ** Function to handle Modal toggle
   const handleModal = () => setModal(!modal)
 
@@ -170,24 +186,26 @@ const StarTimeSheet = () => {
   console.log(ListaLojas)
   console.log(columns)
   console.log(dadosTS)
+
   return (
     <Fragment>
-      <Card  className='flex-md-column flex-column align-md-items-center border-bottom' /*' align-items-start  ' */>      
+      <Card  className='flex-md-column flex-column align-md-items-center border-bottom' /*' align-items-start  ' */> 
             <AutoComplete
               id="selLoja"  
-              suggestions={ListaLojas}
+              suggestions={loj}
               filterKey='SG'
               placeholder='Selecione a Loja'
               suggestionLimit={6}
               className='form-control lov'
             />
-          <InputGroup className='align-items-start d-flex mt-md-0 mt-1' >
-{/*             <InputGroupText>
+         <InputGroup className='align-items-start d-flex mt-md-0 mt-1' >
+{/*              <InputGroupText>
               <Calendar size={15} />   Mês/Ano  
             </InputGroupText> */}
-            <Input className='form-control' id='semana' placeholder='Selecione a semana' onChange={(e) => validate(e)} />
-            <Input className='form-control' id='ano' placeholder='Selecione o ano' onChange={(e) => validate(e)}/>
-          </InputGroup>
+            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' onChange={(e) => validate(e)} />
+            <span className='align-middle ms-50'></span>
+            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' placeholder='Selecione o ano' onChange={(e) => validate(e)}/>
+           </InputGroup>
       </Card>
       
       <Card>

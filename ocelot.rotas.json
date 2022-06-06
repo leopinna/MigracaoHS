@@ -1,0 +1,34 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Pontos/{evetything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "Pontos",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ],
+      "UpstreamPathTemplate": "/Pontos/{evetything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/HSQuery/{evetything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "Query",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "4000"
+        }
+      ],
+      "UpstreamPathTemplate": "/HSQuery/{evetything}",
+      "UpstreamHttpMethod": [
+        "GET"
+      ]
+    }    
+  ]
+}
