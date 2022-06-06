@@ -96,9 +96,9 @@ namespace HS.Star.MetaVendedor.Models
 
                 entity.Property(e => e.Dia).HasColumnName("dia");
 
-                entity.Property(e => e.DtIncl).HasColumnName("dt_incl").HasDefaultValue(DateTime.UtcNow);
+                entity.Property(e => e.DtIncl).HasColumnName("dt_incl");//.HasDefaultValue(DateTime.Today);
 
-                entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual").HasDefaultValue(DateTime.UtcNow);
+                entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual");//.HasDefaultValue(DateTime.Today);
 
                 entity.Property(e => e.Justificativa)
                     .HasMaxLength(60)
@@ -139,9 +139,9 @@ namespace HS.Star.MetaVendedor.Models
                         .HasMaxLength(5)
                         .HasColumnName("ccusto_gl_cod");
 
-                    entity.Property(e => e.DtIncl).HasColumnName("dt_incl").HasDefaultValue(DateTime.UtcNow);
+                    entity.Property(e => e.DtIncl).HasColumnName("dt_incl");//.HasDefaultValue(DateTime.Today);
 
-                    entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual").HasDefaultValue(DateTime.UtcNow);
+                    entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual");//.HasDefaultValue(DateTime.Today);
 
                     entity.Property(e => e.FuncNum).HasColumnName("func_num");
 
@@ -165,7 +165,7 @@ namespace HS.Star.MetaVendedor.Models
 
                 //entity.HasMany(q => q.MetaFuncQuadroHoras);
                     entity.Navigation(e => e.MetaFuncQuadroHoras).AutoInclude();
-                    entity.Navigation(r=> r.RegDiarioFuncStars).AutoInclude();
+                   // entity.Navigation(r=> r.RegDiarioFuncStars).AutoInclude();
             });
 
             OnModelCreatingPartial(modelBuilder);

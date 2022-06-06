@@ -21,8 +21,8 @@ namespace HS.Star.MetaVendedor.Models
         public int QtdPassesRecebidosVenda { get; set; }
         public int QtdPool { get; set; }
         public int QtdTransacoesOutrasLojas { get; set; }
-        public DateOnly DtIncl { get; set; }
-        public DateOnly DtUltAtual { get; set; }
+        public DateTime DtIncl { get; set; }
+        public DateTime DtUltAtual { get; set; }
         public int UsuarioInclNum { get; set; }
         public int UsuarioUltAtualNum { get; set; }
     }

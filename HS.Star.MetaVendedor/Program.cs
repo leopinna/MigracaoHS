@@ -30,8 +30,8 @@ app.UseSwagger();
 app.UseSwaggerUI(config =>
                 {
                     //config.SwaggerEndpoint("/swagger/v1/swagger.json", "Pontos Star - Meta Vendedor");
-                    config.SwaggerEndpoint("/swagger/docs", "Pontos Star - Meta Vendedor");
-                    config.RoutePrefix = "/MetaVendedor";
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "Pontos Star - Meta Vendedor");
+                    config.RoutePrefix = "";
                 });
 
 

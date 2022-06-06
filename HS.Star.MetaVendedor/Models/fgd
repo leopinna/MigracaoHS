@@ -1,0 +1,9 @@
+[
+    {"MetaFuncSemanaStarId":3044,"funcNum":8905,"anoNum":2022,"semanaNum":2,"ccustoGlCod":"11252",
+        "metaMinimaPrevista":30,"metaMinimaRealizada":30,"metaOuroNobrePrevista":48,
+        "metaOuroNobreRealizada":48,"metaStarPrevista":38,"metaStarRealizada":38,"usuarioInclNum":3539,
+        "usuarioUltAtualNum":1530,
+"MetaFuncQuadroHoras":[{"metaFuncQuadroHorasId":62516,"dia":3,"justificativa":"teste de atualização",
+    "qtdHorasPrevista":2,"qtdHorasRealizada":2,"usuarioInclNum":3539,"usuarioUltAtualNum":1530,
+    "metaFuncSemanaStarId":3044}]
+}]

@@ -37,8 +37,8 @@ public class MetaFuncSemanaStarController : Controller
     /// } 
     /// </remarks>
     [HttpGet]
-    [Route("Metas/GetMetaVendedor")]
-    public async  Task<ActionResult<IList<MetaFuncSemanaStar>>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
+    [Route("GetMetaVendedor")]
+    public   ActionResult<IList<MetaFuncSemanaStar>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
     {
         var xpto =  _metaContext.MetaFuncSemanaStars
                     .Where(m => (m.FuncNum == parametros.FuncNum) &&
@@ -61,12 +61,13 @@ public class MetaFuncSemanaStarController : Controller
     ///  
     /// </remarks>
     [HttpPost]
-    [Route("Metas/AtualizaQuadroHoras")]
+    [Route("AtualizaQuadroHoras")]
     public async Task<ActionResult> CadastraHoraPrevista([FromBody] List<MetaFuncSemanaStar>  metaFuncSemana)
     {
         try
         {
-            await _metaContext.MetaFuncSemanaStars.AddRangeAsync(metaFuncSemana);
+            
+            _metaContext.MetaFuncSemanaStars.UpdateRange(metaFuncSemana);
             await _metaContext.SaveChangesAsync();
             return Ok();       
         }
@@ -85,10 +86,10 @@ public class MetaFuncSemanaStarController : Controller
     /// } 
     /// </remarks>
     [HttpGet]
-    [Route("/GetQuadroHoras")]
-    public async  Task<ActionResult<IList<MetaFuncSemanaStar>>> QuadroHorasPrevistas( [FromBody] Parametros parametros)
+    [Route("GetQuadroHoras")]
+    public   ActionResult<IList<MetaFuncSemanaStar>> QuadroHorasPrevistas( [FromQuery] Parametros parametros)
     {
-        var xpto =  _metaContext.MetaFuncSemanaStars
+        var xpto =   _metaContext.MetaFuncSemanaStars
                     .Where(m => m.AnoNum == parametros.Ano &&
                                 m.CcustoGlCod == parametros.CcustoGlCod &&
                                 m.SemanaNum == parametros.Semana)
@@ -98,7 +99,7 @@ public class MetaFuncSemanaStarController : Controller
     }
 
     [HttpGet]
-    [Route("/IsAlive")]
+    [Route("IsAlive")]
     public string IsAlive()
     {
         try

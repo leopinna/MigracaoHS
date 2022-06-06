@@ -43,6 +43,7 @@ const StarTimeSheet = () => {
   const [modal, setModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [loj, setLoj] = useState([])
+  const [lojaSelecionada, setLojaSelecionada] = useState()
   //const [loja, setLoja] = useState(null)
 
   console.log(data)
@@ -57,8 +58,7 @@ const StarTimeSheet = () => {
     })()
   }, [])
 
-  console.log("LOJ:".concat(loj))
-  console.log(loj.keys)
+  console.log("LOJ:".concat(loj.values))
   // ** Function to handle Modal toggle
   const handleModal = () => setModal(!modal)
 
@@ -162,7 +162,17 @@ const StarTimeSheet = () => {
     return result
   }
 
+  function valorcampo(e) {
+      console.log("1.".concat(e.target))
+      console.log("2.".concat(e.target.value))
+  }
+
   function validate(e) {
+    //console.log(e.currentTarget.value)
+      if ('selLoja' === 'selLoja')      {
+        console.log("Ccusto:".concat(loj[0].ccusto))
+        setLojaSelecionada(loj[0].ccusto)
+      }
       if (e.target.id === 'semana' && (e.target.value < 1 || e.target.value > 52)) console.log('Semana Inválida')
       if (e.target.id === 'ano' && (e.target.value < 2019 || e.target.value > new Date().getFullYear)) console.log('Ano Inválido')
   }
@@ -191,20 +201,25 @@ const StarTimeSheet = () => {
     <Fragment>
       <Card  className='flex-md-column flex-column align-md-items-center border-bottom' /*' align-items-start  ' */> 
             <AutoComplete
-              id="selLoja"  
+              id='selLoja'  
+              name='lovloja'
               suggestions={loj}
               filterKey='SG'
               placeholder='Selecione a Loja'
               suggestionLimit={6}
               className='form-control lov'
+              onSuggestionItemClick={console.log("Click")} //{(e) => valorcampo(e)}
+              required
             />
+
          <InputGroup className='align-items-start d-flex mt-md-0 mt-1' >
 {/*              <InputGroupText>
               <Calendar size={15} />   Mês/Ano  
             </InputGroupText> */}
-            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' onChange={(e) => validate(e)} />
+            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' 
+              onChange={(e) => validate(e)} min="1" max="52" sixe="2" required/>
             <span className='align-middle ms-50'></span>
-            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' placeholder='Selecione o ano' onChange={(e) => validate(e)}/>
+            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' onChange={(e) => validate(e)}/>
            </InputGroup>
       </Card>
       
