@@ -6,7 +6,7 @@ import { data, columns } from '../APL/STAR/data'
 
 // ** Add New Modal Component
 import  StarModalTimeSheet  from './StarModalTimeSheet'
-import  {ListaLojas, dadosTS, cols} from '../APL/STAR/StarTimeSheetDados'
+import  {ListaLojas, dadosTS, cols, DiasSemana} from '../APL/STAR/StarTimeSheetDados'
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
@@ -35,30 +35,114 @@ const BootstrapCheckbox = forwardRef((props, ref) => (
   </div>
 ))
 
-const BaseURL = 'http://din512.hstern.com.br:4100/HSQuery/'
+let SelectCalendario = ""
+
+const BaseURL = "http://dev.hstern.com.br:4100/HSQuery/"
 const SelectListaLojas = "select%20c.praca_cod||' - '||c.sigla_cod%20sg%2Cc.descr_gl%20descr%2C%20ls.ccusto_gl_cod%20ccusto%2C%20c.praca_cod%20praca%20from%20hs.loja_star%20ls%2C%20ccusto%20c%20where%20ls.ccusto_gl_cod%20%253D%20c.ccusto_gl_cod%20and%20c.is_ativo%20%3D%20%27S%27%20order%20by%201"
+SelectCalendario = "select%20dt_inicio_semana%20from%20calendario_star%20where%20ano_num=^%20and%20semana_num=~%20and%20dt_inicio_semana%20<=%20dt_fim_semana"
+const AnoCorrente = new Date().getFullYear()
+let ano = 0
+let semana = 0
+
 
 const StarTimeSheet = () => {
   // ** States
   const [modal, setModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [loj, setLoj] = useState([])
-  const [lojaSelecionada, setLojaSelecionada] = useState()
+  const [label, setLabel] = useState([cols])
+  //const [lojaSelecionada, setLojaSelecionada] = useState()
+  //const [semana, setSemana] = useState(0)
+  //const [ano, setAno] = useState(0)
   //const [loja, setLoja] = useState(null)
 
-  console.log(data)
+ // console.log(data)
   //const [searchValue, setSearchValue] = useState('')
   //const [filteredData, setFilteredData] = useState([])
+  const fetchLoja = (async () => {
+    const resp = await fetch(BaseURL.concat(SelectListaLojas))
+    const json = await resp.json()
+    setLoj(json)
+  })
+
+  const fetchDataInicio = (async () => {
+    let queryDiaSemana = SelectCalendario
+    queryDiaSemana = queryDiaSemana.replace("^", ano)
+    queryDiaSemana = queryDiaSemana.replace("~", semana)
+    console.log(queryDiaSemana)
+
+    const resp = await fetch(BaseURL.concat(queryDiaSemana))
+   // console.log(`RESP:${resp}`)
+    const dataInicio = await resp.json()//[0]["DT_INICIO_SEMANA"]
+    console.log("************************")
+    console.log(new Date(dataInicio[0].DT_INICIO_SEMANA))
+    
+    const dataAux = new Date(dataInicio[0].DT_INICIO_SEMANA)
+    const dtInicio = new Date(dataAux)
+    let dia = 0
+    let diaSemana = 0
+    let mes = 0
+    console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;")
+    
+    for (let index = 0; index < 7; index++) {
+
+
+       dtInicio.setDate(dataAux.getDate() + index)
+      // dataAux = dtInicio
+
+       dia = new Date(dtInicio).getDate()
+       diaSemana = new Date(dtInicio).getDay()
+       mes = new Date(dtInicio).getMonth() + 1
+/*        console.log("+++++++++++++++++++++++++")
+       console.log(dia)
+       console.log(dataAux)
+       console.log(dtInicio)
+       console.log(index)
+       console.log("+++++++++++++++++++++++++") */
+       console.log(`${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }\n${  DiasSemana[diaSemana]}`)
+       cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }\n${  DiasSemana[diaSemana]}`
+      
+    }
+    console.log("------------------------------------------------------------------")
+    console.log(cols)
+    setLabel([])
+    setLabel(cols)
+  })
+  
+  function validate(e) {
+    console.log(`ID:${e.target.id}`)
+      if (e.target.id === 'semana') {
+        if (e.target.value < 1 || e.target.value > 52) console.log('Semana Inválida')
+        else {
+          semana = e.target.value
+          console.log(`S:${semana} / ${e.target.value}`)
+        }
+        if (e.target.value === null) semana = 0
+      }
+          
+      if (e.target.id === 'ano') {
+        if (e.target.value === null) ano = 0 
+
+        if (String(e.target.value).length === 4) {
+          console.log(`V:${e.target.value}`)
+          console.log(`D:${AnoCorrente}`)
+          if (e.target.value < 2019 || e.target.value > AnoCorrente) console.log('Ano Inválido')
+          else {
+            ano = e.target.value
+            console.log(`A:${ano} / ${e.target.value}`)
+          }
+        } else console.log("ZEROU")//setAno(0)
+      }
+
+      console.log(`SA:${semana} / ${ano}`)
+      if (semana > 0 && ano > 0) fetchDataInicio()
+  }
 
   useEffect(() => {
-    (async () => {
-      const resp = await fetch(BaseURL.concat(SelectListaLojas))
-      const json = await resp.json()
-      setLoj(json)
-    })()
+      fetchLoja()
+     // fetchDataInicio()
   }, [])
 
-  console.log("LOJ:".concat(loj.values))
   // ** Function to handle Modal toggle
   const handleModal = () => setModal(!modal)
 
@@ -162,20 +246,6 @@ const StarTimeSheet = () => {
     return result
   }
 
-  function valorcampo(e) {
-      console.log("1.".concat(e.target))
-      console.log("2.".concat(e.target.value))
-  }
-
-  function validate(e) {
-    //console.log(e.currentTarget.value)
-      if ('selLoja' === 'selLoja')      {
-        console.log("Ccusto:".concat(loj[0].ccusto))
-        setLojaSelecionada(loj[0].ccusto)
-      }
-      if (e.target.id === 'semana' && (e.target.value < 1 || e.target.value > 52)) console.log('Semana Inválida')
-      if (e.target.id === 'ano' && (e.target.value < 2019 || e.target.value > new Date().getFullYear)) console.log('Ano Inválido')
-  }
 
   // ** Downloads CSV
   function downloadCSV(array) {
@@ -193,9 +263,10 @@ const StarTimeSheet = () => {
     link.setAttribute('download', filename)
     link.click()
   }
-  console.log(ListaLojas)
-  console.log(columns)
-  console.log(dadosTS)
+ // console.log(ListaLojas)
+ // console.log(columns)
+ // console.log(dadosTS)
+// console.log("LOJArray:".concat(loj))
 
   return (
     <Fragment>
@@ -208,18 +279,26 @@ const StarTimeSheet = () => {
               placeholder='Selecione a Loja'
               suggestionLimit={6}
               className='form-control lov'
-              onSuggestionItemClick={console.log("Click")} //{(e) => valorcampo(e)}
-              required
+              //onSuggestionItemClick={(url, e) => valorcampo(url, e)} //{(e) => valorcampo(e)}
+             //onBlur={(e) => valorcampo(e)}
+              
             />
 
          <InputGroup className='align-items-start d-flex mt-md-0 mt-1' >
 {/*              <InputGroupText>
               <Calendar size={15} />   Mês/Ano  
             </InputGroupText> */}
-            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' 
-              onChange={(e) => validate(e)} min="1" max="52" sixe="2" required/>
+            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' 
+            onChange={(e) => validate(e)}
+           // onClear={setAno(0)}
+            />
             <span className='align-middle ms-50'></span>
-            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' onChange={(e) => validate(e)}/>
+            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' 
+              onChange={(e) => validate(e)} 
+              //onClear={setSemana(0)}
+              min="1" max="52" sixe="2" required/>
+            
+
            </InputGroup>
       </Card>
       
@@ -280,7 +359,7 @@ const StarTimeSheet = () => {
             //noHeader
             pagination
             selectableRows
-            columns={cols}
+            columns={label}
             paginationPerPage={7}
             className='react-dataTable'
             sortIcon={<ChevronDown size={10} />}
@@ -288,7 +367,7 @@ const StarTimeSheet = () => {
             paginationComponent={CustomPagination}
             //data={searchValue.length ? filteredData : data}
             data={dadosTS}
-            selectableRowsComponent={BootstrapCheckbox}
+            //selectableRowsComponent={BootstrapCheckbox}
           />
         </div>
       </Card>

@@ -9,6 +9,7 @@ const BaseURL = 'http://din512.hstern.com.br:4100/HSQuery/'
 
 //date.clone().startOf
 export let ListaLojas = []
+export const DiasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 
 // ** Get initial Data
 axios.get("".concat(BaseURL, SelectListaLojas), 

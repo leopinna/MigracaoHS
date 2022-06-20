@@ -307,6 +307,7 @@ const Autocomplete = props => {
   return (
     <div className='autocomplete-container' ref={container}>
       <input
+        id= {props.id}
         type='text'
         onChange={e => {
           onChange(e)
@@ -350,5 +351,6 @@ Autocomplete.propTypes = {
   onSuggestionsShown: PropTypes.func,
   onSuggestionItemClick: PropTypes.func,
   filterKey: PropTypes.string.isRequired,
-  suggestions: PropTypes.array.isRequired
+  suggestions: PropTypes.array.isRequired,
+  id: PropTypes.string
 }
