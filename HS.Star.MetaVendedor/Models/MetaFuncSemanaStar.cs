@@ -21,12 +21,14 @@ namespace HS.Star.MetaVendedor.Models
         public int MetaOuroNobreRealizada { get; set; }
         public int MetaStarPrevista { get; set; }
         public int MetaStarRealizada { get; set; }
-        public DateTime DtIncl { get; set; }
-        public DateTime DtUltAtual { get; set; }
+      //  public DateTime DtIncl { get; set; }
+     //   public DateTime DtUltAtual { get; set; }
         public int UsuarioInclNum { get; set; }
         public int UsuarioUltAtualNum { get; set; }
 
         public virtual ICollection<MetaFuncQuadroHora> MetaFuncQuadroHoras { get; set; } = default!;
+
+      //  public virtual Func Vendedor { get;  set; } = default!;
         //public virtual ICollection<RegDiarioFuncStar> RegDiarioFuncStars {get; set;} = default!;
     }
 }

@@ -18,7 +18,7 @@ public class MetaFuncSemanaStarController : Controller
     }
 
     public class Parametros{
-        public int FuncNum { get; set; }
+        public int? FuncNum { get; set; }
         public string? CcustoGlCod { get; set; }
         public int Ano { get; set; }
         public int Semana { get; set; }
@@ -66,9 +66,19 @@ public class MetaFuncSemanaStarController : Controller
     {
         try
         {
-            
-            _metaContext.MetaFuncSemanaStars.UpdateRange(metaFuncSemana);
-            await _metaContext.SaveChangesAsync();
+            var regUpd = metaFuncSemana.Where(f => f.MetaFuncSemanaStarId == 0);
+
+            var regIns = metaFuncSemana.Where(f => f.MetaFuncSemanaStarId != 0);
+
+            if (regUpd.Count() > 0)
+                _metaContext.MetaFuncSemanaStars.UpdateRange(regUpd);
+
+            if (regIns.Count() > 0)
+                _metaContext.MetaFuncSemanaStars.AddRange(regIns);
+
+            if (regUpd.Count() > 0 || regIns.Count() > 0)
+                await _metaContext.SaveChangesAsync();
+
             return Ok();       
         }
         catch (System.Exception)
@@ -78,6 +88,7 @@ public class MetaFuncSemanaStarController : Controller
 
     }
 
+    
     /// <summary>
     ///     Grava as alterações realizadada no quadro de horas
     /// </summary>
@@ -89,13 +100,30 @@ public class MetaFuncSemanaStarController : Controller
     [Route("GetQuadroHoras")]
     public   ActionResult<IList<MetaFuncSemanaStar>> QuadroHorasPrevistas( [FromQuery] Parametros parametros)
     {
-        var xpto =   _metaContext.MetaFuncSemanaStars
+/*         var xpto =   _metaContext.MetaFuncSemanaStars
+                    .Select(s => new {s.MetaFuncSemanaStarId, s.MetaFuncQuadroHoras, s.AnoNum,s.CcustoGlCod,s.SemanaNum})
                     .Where(m => m.AnoNum == parametros.Ano &&
                                 m.CcustoGlCod == parametros.CcustoGlCod &&
                                 m.SemanaNum == parametros.Semana)
-                    .ToList();
+                    .ToList(); */
 
-        return xpto is null?  NotFound(StatusCodes.Status400BadRequest) : Ok(xpto);
+         var quadro = (from qd in _metaContext.MetaFuncSemanaStars
+                    join f in _metaContext.Func
+                    on qd.FuncNum equals f.FuncNum
+                    select new {
+                        Nome = String.Format("{0} {1}", f.Nome, f.Sobrenome),
+                        Id = qd.MetaFuncSemanaStarId,
+                        Quadro = qd.MetaFuncQuadroHoras,
+                        Ano = qd.AnoNum,
+                        Semana = qd.SemanaNum,
+                        Ccusto = qd.CcustoGlCod
+                    }).Where(q => q.Ano == parametros.Ano &&
+                        q.Ccusto == parametros.CcustoGlCod &&
+                        q.Semana== parametros.Semana)
+                    .ToList(); 
+
+
+        return quadro is null?  NotFound(StatusCodes.Status400BadRequest) : Ok(quadro);
     }
 
     [HttpGet]
@@ -104,7 +132,8 @@ public class MetaFuncSemanaStarController : Controller
     {
         try
         {
-           return _metaContext.MetaFuncSemanaStars.FirstOrDefault() is not null ? "Sucesso" : "A tabela META pode estar vazia.";
+           return _metaContext.Database.CanConnect() ? "Sucesso" : "Banco de dados não acessível.";
+           
         }
         catch (System.Exception ex) 
         {

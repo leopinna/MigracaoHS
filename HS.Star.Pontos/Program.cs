@@ -10,12 +10,13 @@ string url = builder.Configuration.GetValue<string>("UrlDeploy:PROD");
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen((config =>
+/* builder.Services.AddSwaggerGen((config =>
                             {
                                 config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Pontos Star - Valor Ponto Loja", Version = "v1" });
                             })
-  );
+  ); */
 
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -61,7 +62,7 @@ app.MapGet("Pontos/GetByCcustoAnoMes/{ccusto}/{ano}/{mes}", async (string ccusto
             client.BaseAddress = new Uri("http://"+url+":5010/");
             client.DefaultRequestHeaders.Clear();
 
-            HttpResponseMessage Res = await client.GetAsync("Pontos/GetByCcusto/"+ccusto);
+            HttpResponseMessage Res = await client.GetAsync("pontos/"+ccusto);
 
             if (Res.IsSuccessStatusCode)
             {

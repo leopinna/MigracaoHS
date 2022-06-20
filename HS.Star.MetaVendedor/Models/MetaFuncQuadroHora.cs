@@ -10,8 +10,8 @@ namespace HS.Star.MetaVendedor.Models
         public string? Justificativa { get; set; }
         public double QtdHorasPrevista { get; set; }
         public double QtdHorasRealizada { get; set; }
-        public DateTime DtIncl { get; set; }
-        public DateTime DtUltAtual { get; set; }
+      //  public DateTime DtIncl { get; set; }
+      //  public DateTime DtUltAtual { get; set; }
         public int UsuarioInclNum { get; set; }
         public int UsuarioUltAtualNum { get; set; }
         public int MetaFuncSemanaStarId { get; set; }

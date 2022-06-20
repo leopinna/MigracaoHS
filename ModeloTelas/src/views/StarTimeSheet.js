@@ -40,6 +40,7 @@ let SelectCalendario = ""
 const BaseURL = "http://dev.hstern.com.br:4100/HSQuery/"
 const SelectListaLojas = "select%20c.praca_cod||' - '||c.sigla_cod%20sg%2Cc.descr_gl%20descr%2C%20ls.ccusto_gl_cod%20ccusto%2C%20c.praca_cod%20praca%20from%20hs.loja_star%20ls%2C%20ccusto%20c%20where%20ls.ccusto_gl_cod%20%253D%20c.ccusto_gl_cod%20and%20c.is_ativo%20%3D%20%27S%27%20order%20by%201"
 SelectCalendario = "select%20dt_inicio_semana%20from%20calendario_star%20where%20ano_num=^%20and%20semana_num=~%20and%20dt_inicio_semana%20<=%20dt_fim_semana"
+const GetQuadroHoras = "MetaVendedor/GetQuadroHoras/CcustoGlCod={0}&Ano={1}&Semana={2}"
 const AnoCorrente = new Date().getFullYear()
 let ano = 0
 let semana = 0
@@ -51,6 +52,7 @@ const StarTimeSheet = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [loj, setLoj] = useState([])
   const [label, setLabel] = useState([cols])
+  const [quadro, setQuadro] = useState([])
   //const [lojaSelecionada, setLojaSelecionada] = useState()
   //const [semana, setSemana] = useState(0)
   //const [ano, setAno] = useState(0)
@@ -103,10 +105,26 @@ const StarTimeSheet = () => {
        cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }\n${  DiasSemana[diaSemana]}`
       
     }
-    console.log("------------------------------------------------------------------")
-    console.log(cols)
+    //console.log("------------------------------------------------------------------")
+    //console.log(cols)
     setLabel([])
     setLabel(cols)
+
+    const ccusto_gl_cod = loj[document.getElementById("selLoja")]
+    let auxQuadroHoras = GetQuadroHoras
+    auxQuadroHoras = auxQuadroHoras.replace("{0}", ccusto_gl_cod)
+    auxQuadroHoras = auxQuadroHoras.replace("{1}", ano)
+    auxQuadroHoras = auxQuadroHoras.replace("{2}", semana)
+
+    console.log(auxQuadroHoras)
+    const respQuadro = await fetch(BaseURL.concat(auxQuadroHoras))
+    console.log("-------------------------------- ---------------------")
+    console.log(respQuadro)
+
+    setQuadro([])
+    setQuadro(respQuadro)
+
+
   })
   
   function validate(e) {
@@ -366,7 +384,7 @@ const StarTimeSheet = () => {
             paginationDefaultPage={currentPage + 1}
             paginationComponent={CustomPagination}
             //data={searchValue.length ? filteredData : data}
-            data={dadosTS}
+            data={quadro}
             //selectableRowsComponent={BootstrapCheckbox}
           />
         </div>

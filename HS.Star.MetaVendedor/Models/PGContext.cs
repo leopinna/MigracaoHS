@@ -18,7 +18,9 @@ namespace HS.Star.MetaVendedor.Models
 
         public virtual DbSet<RegDiarioFuncStar> RegDiarioFuncStars { get; set; } = null!;
         public DbSet<MetaFuncQuadroHora> MetaFuncQuadroHoras { get; set; } = null!;
-        public DbSet<MetaFuncSemanaStar> MetaFuncSemanaStars { get; set; } = null!;    
+        public DbSet<MetaFuncSemanaStar> MetaFuncSemanaStars { get; set; } = null!; 
+
+        public DbSet<Func> Func {get; set;}    = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +29,7 @@ namespace HS.Star.MetaVendedor.Models
 /* #warning To protect potentially sensitive information in your connection string, you should move it out of source code. 
 #You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - 
 #see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263. */
-                optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=hspgadm");
+                optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=hspgadm"); //10.1.128.94
             }
         }
 
@@ -35,6 +37,22 @@ namespace HS.Star.MetaVendedor.Models
         {
             modelBuilder.HasPostgresExtension("pg_catalog", "adminpack")
                 .HasPostgresExtension("oracle_fdw");
+                
+            modelBuilder.Entity<Func>(entity =>
+            {
+                entity.ToTable("func", "HS");
+                entity.HasKey(k => k.FuncNum).HasName("func_pk");
+
+                entity.Property(e => e.FuncNum).HasColumnName("func_num");
+
+                entity.Property(e => e.Nome).HasColumnName("nome").HasComputedColumnSql("[Nome]+' '+[Sobrenome]");
+
+                entity.Property(e => e.Sobrenome).HasColumnName("sobrenome");
+
+                //entity.Property(e => e.NomeCompleto).HasComputedColumnSql("[Nome]+' '+[Sobrenome]");
+            });
+
+            
 
             modelBuilder.Entity<RegDiarioFuncStar>(entity =>
             {
@@ -96,9 +114,9 @@ namespace HS.Star.MetaVendedor.Models
 
                 entity.Property(e => e.Dia).HasColumnName("dia");
 
-                entity.Property(e => e.DtIncl).HasColumnName("dt_incl");//.HasDefaultValue(DateTime.Today);
+             //   entity.Property(e => e.DtIncl).HasColumnName("dt_incl");//.HasDefaultValue(DateTime.Today);
 
-                entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual");//.HasDefaultValue(DateTime.Today);
+            //    entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual");//.HasDefaultValue(DateTime.Today);
 
                 entity.Property(e => e.Justificativa)
                     .HasMaxLength(60)
@@ -116,7 +134,7 @@ namespace HS.Star.MetaVendedor.Models
             //teste
             //entity.Navigation(e => e.MetaFuncSemanaStar);
 
-            //  entity.HasOne(d => d.MetaFuncSemanaStarId)
+            //  entity.HasOne(d => d.MetaFuncSemanaStarId);
             //     .WithMany(p => p.MetaFuncQuadroHoras)
             //     .HasForeignKey(d => d.MetaFuncSemanaStarId)
             //     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -139,9 +157,9 @@ namespace HS.Star.MetaVendedor.Models
                         .HasMaxLength(5)
                         .HasColumnName("ccusto_gl_cod");
 
-                    entity.Property(e => e.DtIncl).HasColumnName("dt_incl");//.HasDefaultValue(DateTime.Today);
+                 //   entity.Property(e => e.DtIncl).HasColumnName("dt_incl").HasDefaultValue(DateTime.Now);
 
-                    entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual");//.HasDefaultValue(DateTime.Today);
+                 //   entity.Property(e => e.DtUltAtual).HasColumnName("dt_ult_atual").HasDefaultValue(DateTime.Now);
 
                     entity.Property(e => e.FuncNum).HasColumnName("func_num");
 
@@ -165,6 +183,14 @@ namespace HS.Star.MetaVendedor.Models
 
                 //entity.HasMany(q => q.MetaFuncQuadroHoras);
                     entity.Navigation(e => e.MetaFuncQuadroHoras).AutoInclude();
+                   // entity.Navigation(f => f.Vendedor).AutoInclude();
+                   // entity.HasOne(f => f.Vendedor).WithMany().HasForeignKey(e => e.FuncNum).HasPrincipalKey(e => e.FuncNum).Metadata.;
+                    //WithOne().HasForeignKey(e => e);
+                    
+                    //entity.HasOne<Func>(f => f.Func).WithMany(m => m.MetaFunc).HasForeignKey<MetaFuncSemanaStar>(m => m.FuncNum);
+                    //(e => e.Func).WithOne(m => m.MetaFunc)
+
+               //.HasForeignKey<Func>(d => d.);
                    // entity.Navigation(r=> r.RegDiarioFuncStars).AutoInclude();
             });
 
