@@ -29,15 +29,16 @@ namespace HS.Star.MetaVendedor.Models
 /* #warning To protect potentially sensitive information in your connection string, you should move it out of source code. 
 #You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - 
 #see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263. */
-                optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=hspgadm"); //10.1.128.94
+                 optionsBuilder.UseNpgsql("Host=10.1.0.143;Port=5432;Database=postgres;Username=testedsv;Password=D$V2022");  //10.1.128.94
+                //optionsBuilder.UseNpgsql("Host=10.1.190.87;Port=5432;Database=postgres;Username=postgres;Password=hspgadm");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasPostgresExtension("pg_catalog", "adminpack")
+           /*  modelBuilder.HasPostgresExtension("pg_catalog", "adminpack")
                 .HasPostgresExtension("oracle_fdw");
-                
+ */                
             modelBuilder.Entity<Func>(entity =>
             {
                 entity.ToTable("func", "HS");

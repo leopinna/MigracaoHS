@@ -11,7 +11,7 @@ import { Modal, Input, Label, Button, ModalHeader, ModalBody, InputGroup, InputG
 // ** Styles
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 
-const StarModalTimeSheet = ({ open, handleModal }) => {
+const StarModalTimeSheet = ({ open, handleModal, registro }) => {
   // ** State
   const [Picker, setPicker] = useState(new Date())
 

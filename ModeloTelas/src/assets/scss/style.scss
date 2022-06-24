@@ -24,7 +24,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .rdt_Table{
-	padding: 0 25px 0 25px;
+	padding: 0 25px 0 40px;
 }
 
 .rdt_TableCell{
@@ -34,5 +34,15 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 .rdt_TableRow:last-child{
 		border-bottom: 1px solid lightgrey;
+		padding-bottom: 25px;
 
+}
+
+.rdt_TableCell:nth-child(2){
+	display: none;
+}
+
+.rdt_TableCell:nth-child(3){
+	width:auto;
+	color: blanchedalmond
 }

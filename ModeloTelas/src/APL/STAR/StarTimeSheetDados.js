@@ -8,26 +8,20 @@ const BaseURL = 'http://dev.hstern.com.br:4100/HSQuery/'
 
 
 //date.clone().startOf
-export let ListaLojas = []
+export const ListaLojas = []
 export const DiasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 
-// ** Get initial Data
-axios.get("".concat(BaseURL, SelectListaLojas), 
-    {headers: {"Access-Control-Allow-Origin": "*"} })
-    .then(response => {
-        ListaLojas = response.data
-})
 
 export  const cols = [
     { name:"", selector: row => row.id},  
-    { name:"", selector: row => row.nome},
-    { name:"1", selector: row => row.d1},
-    { name:"2", selector: row => row.d2},
-    { name:"3", selector: row => row.d3},
-    { name:"4", selector: row => row.d4},
-    { name:"5", selector: row => row.d5},
-    { name:"6", selector: row => row.d6},
-    { name:"7", selector: row => row.d7}
+    { name:"", selector: row => row.nome, width:150},
+    { name:"d1", selector: row => row.d1},
+    { name:"d2", selector: row => row.d2},
+    { name:"d3", selector: row => row.d3},
+    { name:"d4", selector: row => row.d4},
+    { name:"d5", selector: row => row.d5},
+    { name:"d6", selector: row => row.d6},
+    { name:"d7", selector: row => row.d7}
 ]
 export const dadosLBL = [
     {
@@ -45,44 +39,87 @@ export const dadosLBL = [
         d6:"6"
     }
 ]
+
 export const dadosTS = [
-{
-    id : "1",
-    nome : "A",
-    d1:"0",
-    d2:"4",
-    d3:"6"
-},
-{
-    id : "2",
-    nome : "B",
-    d1:"0",
-    d5:"4",
-    d6:"6"
-},
-{
-    id : "4",
-    nome : "V",
-    d1:"0",
-    d2:"4",
-    d3:"6",
-    d3:"7"
-},
-{
-    id : "3",
-    nome : "F",
-    d1:"0",
-    d6:"4",
-    d7:"6"
-},
-{
-    id : "5",
-    nome : "H",
-    d4:"0",
-    d2:"4",
-    d3:"6",
-    d4:"6",
-    d6:"6",
-    d7:"6"
-}
+    {
+        id : "1",
+        nome : "A",
+        d1:"0",
+        d2:"4",
+        d3:"6"
+    },
+    {
+        id : "2",
+        nome : "B",
+        d1:"0",
+        d5:"4",
+        d6:"6"
+    },
+    {
+        id : "4",
+        nome : "V",
+        d1:"0",
+        d2:"4",
+        d3:"6",
+        d3:"7"
+    },
+    {
+        id : "3",
+        nome : "F",
+        d1:"0",
+        d6:"4",
+        d7:"6"
+    },
+    {
+        id : "5",
+        nome : "H",
+        d4:"0",
+        d2:"4",
+        d3:"6",
+        d4:"6",
+        d6:"6",
+        d7:"6"
+    }
+    ]
+
+export const dadosTeste = [
+    {
+      id: 6,
+      nome: "MARCIO JOSE TOREZIN",
+      /* ano: 2020,
+      semana: 2,
+      ccusto: "11252", */
+      d1: "",
+      d2: "1",
+      d3: "1",
+      d4: "1",
+      d5: "0",
+      d6: "0",
+      d7: "0"
+    },
+    {
+        id: 9,
+        nome: "MARCIO JOSE TOREZIN",
+         ano: 2020,
+        semana: 2,
+        ccusto: "11252", 
+        d1: "",
+        d2: "1",
+        d3: "1",
+        d4: "1",
+        d5: "0",
+        d6: "0",
+        d7: "0"
+      },
+      {
+        id: 7,
+        nome: "ANDREIA DURAES LEITE",
+        d1: [6],
+        d2: [0],
+        d3: [6],
+        d4: [6],
+        d5: [6],
+        d6: [0],
+        d7: [0]
+      }
 ]

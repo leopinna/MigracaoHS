@@ -4,7 +4,7 @@ import jwtDefaultConfig from './jwtDefaultConfig'
 export default class JwtService {
 
   // ** jwtConfig <= Will be used by this service
-   jwtConfig = { ...jwtDefaultConfig }
+ jwtConfig = { ...jwtDefaultConfig }
 
   // ** For Refreshing Token
   isAlreadyFetchingAccessToken = false

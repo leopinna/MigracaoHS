@@ -1,5 +1,5 @@
 // ** React Imports
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // ** Custom Hooks
@@ -23,15 +23,17 @@ import Avatar from '@components/avatar'
 import InputPasswordToggle from '@components/input-password-toggle'
 
 // ** Utils
-import { getHomeRouteForLoggedInUser } from '@utils'
+import { getHomeRouteForLoggedInUser, baseURL } from '@utils'
 
 // ** Reactstrap Imports
 import { Row, Col, Form, Input, Label, Alert, Button, CardText, CardTitle, UncontrolledTooltip } from 'reactstrap'
 
 // ** Styles
 import '@styles/react/pages/page-authentication.scss'
+import { string } from 'prop-types'
+//import { useState } from 'preact/hooks'
 
-const ToastContent = ({ t, name, role }) => {
+const ToastContent = ({ t, name }) => {
   return (
     <div className='d-flex'>
       <div className='me-1'>
@@ -71,9 +73,49 @@ const Login = () => {
     source = require(`@src/assets/images/logo/hstern.png`).default
   //source = require(`@src/assets/images/pages/${illustration}`).default
 
+ // let loginComSucesso
+  //const [loginComSucesso, setLoginComSucesso] = useState(false)
+
+  const loginHS = ((login, passwd) => {
+    let retornoLogin = 
+ 
+     fetch(baseURL.concat('Login'), {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username: login, password: passwd})})
+      .then((resp) => {
+        if (resp.status === 200) navigate(getHomeRouteForLoggedInUser('usuario'))
+        else toast.error('Login e/ou Senha incorretos.', {duration: 4000, position:"bottom-right"})
+        //retornoLogin = resp.json() 
+        //  setLoginComSucesso(resp.ok)
+                      })
+      .then((data) => {
+        setTimeout(() => {
+          retornoLogin = (data)
+        })
+})
+      .catch(erro => { 
+        console.error('Erro:', erro.message) 
+        //setLoginComSucesso(false)
+      //toast.error('Acesso não autorizado.', {duration: 4000, position:"bottom-right"})
+    })
+  console.log(`Ret:${retornoLogin}`) 
+  }
+    )
+
   const onSubmit = data => {
     if (Object.values(data).every(field => field.length > 0)) {
-     { /* useJwt
+     {  
+       loginHS(data.loginEmail, data.password)
+       //console.log(loginComSucesso)
+
+       //if (loginComSucesso) navigate(getHomeRouteForLoggedInUser('usuario'))
+       //else toast.error('Acesso não autorizado.', {duration: 4000, position:"bottom-right"})
+
+      /* useJwt
         .login({ email: data.loginEmail, password: data.password })
         .then(res => {
           const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
@@ -85,8 +127,8 @@ const Login = () => {
             <ToastContent t={t} role={data.role || 'admin'} name={data.fullName || data.username || 'John Doe'} />
           ))
         })
-      .catch(err => console.log(err))*/ }
-      navigate(getHomeRouteForLoggedInUser('usuario'))
+      .catch(err => console.log(err)) */ }
+
     } else {
       for (const key in data) {
         if (data[key].length === 0) {

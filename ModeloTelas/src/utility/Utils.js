@@ -1,5 +1,7 @@
 import { DefaultRoute } from '../router/routes'
 
+export const baseURL = "http://dev.hstern.com.br:4100/"
+
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
 

@@ -1,22 +1,25 @@
 import { Mail, Home, Star } from 'react-feather'
 
 export default [
-  {
-    id: 'home',
-    title: 'Home',
-    icon: <Home size={20} />,
-    navLink: '/home'
-  },
-  {
-    id: 'secondPage',
-    title: 'Second Page',
-    icon: <Mail size={20} />,
-    navLink: '/second-page'
-  },
+{ id: 'STAR',
+title: 'Programa Star',
+children:
+[
   {
     id: 'STA',
-    title: 'Prog. Star',
-    icon: <Star size={20} />,
+    title: 'TimeSheet',
     navLink: '/StarTimesheet'   
+  },
+  {
+    id: 'STA_AuaenciaFuncionario',
+    title: 'Ausência',
+    navlink: '/AusenciaFunc'
+  },
+  {
+    id: 'STA_CorrecaoAtendimento',
+    title: 'Correção ATs',
+    navlink: '/CorrecaoAT'
   }
+]
+}
 ]

@@ -1,6 +1,7 @@
 // ** Auth Endpoints
 export default  {
-  loginEndpoint: '/jwt/login',
+  loginEndpoint: 'http://dev.hstern.com.br:4100/Login',
+  //'/jwt/login',
   registerEndpoint: '/jwt/register',
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: '/jwt/logout',

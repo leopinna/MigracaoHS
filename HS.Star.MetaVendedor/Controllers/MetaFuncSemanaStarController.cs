@@ -38,7 +38,7 @@ public class MetaFuncSemanaStarController : Controller
     /// </remarks>
     [HttpGet]
     [Route("GetMetaVendedor")]
-    public   ActionResult<IList<MetaFuncSemanaStar>> GetByFuncLojaPeriodo( [FromBody] Parametros parametros)
+    public   ActionResult<IList<MetaFuncSemanaStar>> GetByFuncLojaPeriodo( [FromQuery] Parametros parametros)
     {
         var xpto =  _metaContext.MetaFuncSemanaStars
                     .Where(m => (m.FuncNum == parametros.FuncNum) &&
@@ -111,12 +111,20 @@ public class MetaFuncSemanaStarController : Controller
                     join f in _metaContext.Func
                     on qd.FuncNum equals f.FuncNum
                     select new {
-                        Nome = String.Format("{0} {1}", f.Nome, f.Sobrenome),
                         Id = qd.MetaFuncSemanaStarId,
-                        Quadro = qd.MetaFuncQuadroHoras,
+                        Nome = String.Format("{0} {1}", f.Nome, f.Sobrenome),
+                        //Quadro = qd.MetaFuncQuadroHoras,
+                        D1 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 1).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D2 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 2).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D3 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 3).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D4 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 4).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D5 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 5).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D6 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 6).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
+                        D7 = (qd.MetaFuncQuadroHoras.Where(d => d.Dia == 7).Select(d => TimeSpan.FromHours(d.QtdHorasPrevista).ToString("hh':'mm"))),
                         Ano = qd.AnoNum,
                         Semana = qd.SemanaNum,
-                        Ccusto = qd.CcustoGlCod
+                        Ccusto = qd.CcustoGlCod,
+                        Total = (qd.MetaFuncQuadroHoras.Sum(d => d.QtdHorasPrevista))
                     }).Where(q => q.Ano == parametros.Ano &&
                         q.Ccusto == parametros.CcustoGlCod &&
                         q.Semana== parametros.Semana)
