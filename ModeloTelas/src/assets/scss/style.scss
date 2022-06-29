@@ -24,25 +24,26 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .rdt_Table{
-	padding: 0 25px 0 40px;
+	padding: 0 25px 25px 25px;
+}
+
+.rdt_TableRow:last-child{
+		border-bottom: 1px solid lightgrey;
 }
 
 .rdt_TableCell{
 	border-right: 1px solid lightgrey;
 	text-align: center;
+	color: primary;
+	font-weight: bold;
+	justify-content: space-around;
 }
-
-.rdt_TableRow:last-child{
-		border-bottom: 1px solid lightgrey;
-		padding-bottom: 25px;
-
-}
-
-.rdt_TableCell:nth-child(2){
+.rdt_TableCell:nth-child(1){
 	display: none;
 }
 
-.rdt_TableCell:nth-child(3){
+.rdt_TableCell:nth-child(2){
 	width:auto;
-	color: blanchedalmond
+	text-align:start;
+	border-left: 1px solid lightgrey;
 }

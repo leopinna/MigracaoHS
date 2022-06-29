@@ -6,6 +6,8 @@ namespace HS.Star.MetaVendedor.Models
         public string Nome { get; set; } = null!;
         public string Sobrenome { get; set; }  = null!;
 
+        public string Apelido { get; set; }  = null!;
+
        // public string? NomeCompleto  { get; private set; }
 
       //  public virtual ICollection<MetaFuncSemanaStar>? MetaFunc {get;}

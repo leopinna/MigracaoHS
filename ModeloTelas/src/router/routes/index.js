@@ -12,6 +12,7 @@ import PublicRoute from '@components/routes/PublicRoute'
 
 // ** Utils
 import { isObjEmpty } from '@utils'
+//import AusenciaFunc from '../../views/AusenciaFunc'
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -33,12 +34,17 @@ const ForgotPassword = lazy(() => import('../../views/ForgotPassword'))
 const Error = lazy(() => import('../../views/Error'))
 
 const StarTimeSheet = lazy(() => import('../../views/StarTimeSheet'))
+const AusenciaFunc = lazy(() => import('../../views/AusenciaFunc'))
 
 // ** Merge Routes
 const Routes = [
   {
     path: '/StarTimeSheet',
     element: <StarTimeSheet />
+  },
+  {
+    path: '/AusenciaFunc',
+    element: <AusenciaFunc />
   },
   {
     path: '/',

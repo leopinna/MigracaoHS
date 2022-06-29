@@ -112,6 +112,10 @@ const StarTimeSheet = () => {
     console.log("-------------------------------- ---------------------")
     console.log(respQuadro)
 
+    respQuadro.forEach(q => {
+      q.nome = q.nome.split(' ')[0]
+    })
+  
     setQuadro([])
     setQuadro(respQuadro)
 
@@ -282,7 +286,7 @@ const StarTimeSheet = () => {
           <DataTable
             //noHeader
             //pagination
-            selectableRows
+            //selectableRows
             columns={label}
             //paginationPerPage={20}
             className='react-dataTable'
@@ -292,6 +296,7 @@ const StarTimeSheet = () => {
             //data={searchValue.length ? filteredData : data}
             data={quadro}//{quadro}
             onRowDoubleClicked={(e) => editaregistro(e)}
+            responsive={true}
             //selectableRowsComponent={BootstrapCheckbox}
           />
         </div>

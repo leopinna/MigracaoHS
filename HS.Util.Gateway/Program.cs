@@ -17,9 +17,10 @@ builder.Services.AddOcelot(builder.Configuration).AddPolly();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 builder.Services.AddCors(opt =>
         {
-            opt.AddPolicy(name: "API_CORS", b =>
+            opt.AddPolicy(name: "API_CORS_GATEWAY", b =>
             {
                 b.AllowAnyOrigin()
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
@@ -41,7 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.UseCors("API_CORS");
+app.UseCors("API_CORS_GATEWAY");
 
 
 // Configure the HTTP request pipeline.

@@ -17,13 +17,15 @@ builder.Services.AddSwaggerGen((config =>
 
 builder.Services.AddCors(opt =>
         {
-            opt.AddPolicy(name: "API_CORS", b =>
+            opt.AddPolicy(name: "API_CORS_QUERY", b =>
             {
                 b.AllowAnyOrigin()
+                .SetIsOriginAllowedToAllowWildcardSubdomains()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
         });
+
 
 var app = builder.Build();
 
@@ -40,7 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
-app.UseCors("API_CORS");
+app.UseCors("API_CORS_QUERY");
+
 
 
 
