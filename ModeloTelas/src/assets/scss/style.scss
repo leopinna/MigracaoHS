@@ -9,23 +9,63 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
-.autocomplete-container{
+.body{
+	font-family: 'Source Sans Pro';
+}
+
+.navigation{
+	font-family: 'Source Sans Pro';
+	font-style: 0.9em;
+}
+
+.form-control{
+	font-family: 'Source Sans Pro';
+	font-style: 0.9em;
+	margin: 1.5rem;
+}
+
+.flable{
+	font-family: 'Source Sans Pro';
+	font-style: 0.9em;
+	margin: 2rem;
+}
+/* .autocomplete-container{
 	padding: 1.5em;
-	display: block;
+	display: inline-flex;
+} */
+
+.card_param_ts{
+	font-family: 'Source Sans Pro';
+	display: inline-block;
+    width: 100%;
+    padding: 10px;
 }
 
 .lov{
-	font-weight: bold;
 	font-style: 0.857rem;
-	letter-spacing: 0.5px;
-	height: 1.5rem;
-	padding: 5px;
-	display: block;
+	height: 1.5em;
+	padding: 11px;
+	display: inline-flex;
 }
 
 .rdt_Table{
 	padding: 0 25px 25px 25px;
+	font-family: 'Source Sans Pro';
 }
+
+.rdt_TableHeadRow{
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #e5e5e5;
+	border-top: 1px solid #e5e5e5;
+	font-size: 0.857rem;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	height: 1.5rem;
+	padding: 15px;
+	display: block;
+	justify-content: space-around;
+}
+
 
 .rdt_TableRow:last-child{
 		border-bottom: 1px solid lightgrey;
@@ -35,7 +75,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	border-right: 1px solid lightgrey;
 	text-align: center;
 	color: primary;
-	font-weight: bold;
+	//font-weight: bold;
 	justify-content: space-around;
 }
 .rdt_TableCell:nth-child(1){
