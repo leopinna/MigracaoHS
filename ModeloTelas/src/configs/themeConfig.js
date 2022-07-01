@@ -3,8 +3,9 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'H Stern',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'HSTERN',
+    //appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appLogoImage: require('@src/assets/images/logo/hstern.png').default
   },
   layout: {
     isRTL: false,

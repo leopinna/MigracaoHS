@@ -12,6 +12,7 @@ import  {cols, DiasSemana, dadosTeste} from '../APL/STAR/StarTimeSheetDados'
 import DataTable from 'react-data-table-component'
 import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, Plus } from 'react-feather'
 import { baseURL } from '../utility/Utils'
+import toast from 'react-hot-toast'
 
 // ** Reactstrap Imports
 import {
@@ -23,10 +24,12 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledButtonDropdown,
-  InputGroup
+  InputGroup,
+  Label
 } from 'reactstrap'
 
 import AutoComplete from '@components/autocomplete'
+import { LabelList } from 'recharts'
 
 // ** Bootstrap Checkbox Component
 const BootstrapCheckbox = forwardRef((props, ref) => (
@@ -86,7 +89,7 @@ const StarTimeSheet = () => {
        diaSemana = new Date(dtInicio).getDay()
        mes = new Date(dtInicio).getMonth() + 1
 
-       cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }\n${  DiasSemana[diaSemana]}`
+       cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }{\n}${  DiasSemana[diaSemana]}`
       
     }
     //console.log("------------------------------------------------------------------")
@@ -112,10 +115,10 @@ const StarTimeSheet = () => {
     console.log("-------------------------------- ---------------------")
     console.log(respQuadro)
 
-    respQuadro.forEach(q => {
+/*     respQuadro.forEach(q => {
       q.nome = q.nome.split(' ')[0]
     })
-  
+   */
     setQuadro([])
     setQuadro(respQuadro)
 
@@ -125,12 +128,26 @@ const StarTimeSheet = () => {
   function validate(e) {
     //console.log(`ID:${e.target.id}`)
       if (e.target.id === 'semana') {
-        if (e.target.value < 1 || e.target.value > 52) console.log('Semana Inválida')
-        else {
+        const campo = document.getElementById("semana")
+        if (e.target.value < 1 || e.target.value > 52 || e.target.value === "") {
+          campo.style.borderColor = "red"
+          campo.style.borderWidth = "1px"
+          
+          console.log('Semana Inválida')
+          campo.setCustomValidity('Inválida')
+
+          campo.innerHTML = "A semana deve estar entre 1 e 52"
+
+          semana = 0
+          setQuadro([])
+        } else {
           semana = e.target.value
+          campo.setCustomValidity("")
+          campo.innerText = ""
+          campo.style.borderColor = ""
+          campo.style.borderWidth = "1px"
           //console.log(`S:${semana} / ${e.target.value}`)
         }
-        if (e.target.value === null) semana = 0
       }
           
       if (e.target.id === 'ano') {
@@ -212,7 +229,7 @@ const StarTimeSheet = () => {
 
   return (
     <Fragment>
-      <Card  className='flex-md-column flex-column align-md-items-center border-bottom' /*' align-items-start  ' */> 
+      <Card className='flex-md-row'> 
             <AutoComplete
               id='selLoja'  
               name='lovloja'
@@ -220,28 +237,20 @@ const StarTimeSheet = () => {
               filterKey='SG'
               placeholder='Selecione a Loja'
               suggestionLimit={6}
-              className='form-control lov'
-              //onSuggestionItemClick={(url, e) => valorcampo(url, e)} //{(e) => valorcampo(e)}
-             //onBlur={(e) => valorcampo(e)}
-              
+              className='form-control' 
+              label="Loja"
             />
 
-         <InputGroup className='align-items-start d-flex mt-md-0 mt-1' >
-{/*              <InputGroupText>
-              <Calendar size={15} />   Mês/Ano  
-            </InputGroupText> */}
-            <Input className='d-flex flex-column align-md-items-center form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' 
-            onChange={(e) => validate(e)}
+         {/* <InputGroup className='align-items-start d-flex mt-md-0 mt-1' > */}
+            <Input  className='form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' 
+            onChange={(e) => validate(e)} required
            // onClear={setAno(0)}
             />
-            <span className='align-middle ms-50'></span>
-            <Input className='d-flex flex-column align-md-items-center form-control' id='semana' placeholder='Selecione a semana' 
+            <Input className= 'form-control' /* className='d-flex flex-column align-md-items-center form-control' */ id='semana' placeholder='Selecione a semana' 
               onChange={(e) => validate(e)} 
               //onClear={setSemana(0)}
-              min="1" max="52" sixe="2" required/>
-            
-
-           </InputGroup>
+              min="1" max="52" size="2" required/>
+           {/* </InputGroup> */}
       </Card>
       
       <Card>

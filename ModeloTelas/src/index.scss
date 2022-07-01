@@ -1,2 +1,7 @@
 @import '../node_modules/prismjs/themes/prism-tomorrow';
 @import './assets/scss/app.scss';
+@import './assets/fonts';
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: local('Source Sans Pro'), url(./assets/fonts/SourceSansPro*.ttf) format('truetype');
+  }

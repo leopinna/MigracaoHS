@@ -50,6 +50,8 @@ namespace HS.Star.MetaVendedor.Models
 
                 entity.Property(e => e.Sobrenome).HasColumnName("sobrenome");
 
+                entity.Property(e => e.Apelido).HasColumnName("apelido");
+
                 //entity.Property(e => e.NomeCompleto).HasComputedColumnSql("[Nome]+' '+[Sobrenome]");
             });
 

@@ -15,6 +15,7 @@ import { useOnClickOutside } from '@hooks/useOnClickOutside'
 // ** Styles Imports
 import '@styles/base/bootstrap-extended/_include.scss'
 import './autocomplete.scss'
+import { Label } from 'reactstrap'
 
 const Autocomplete = props => {
   // ** Refs
@@ -352,5 +353,6 @@ Autocomplete.propTypes = {
   onSuggestionItemClick: PropTypes.func,
   filterKey: PropTypes.string.isRequired,
   suggestions: PropTypes.array.isRequired,
-  id: PropTypes.string
+  id: PropTypes.string,
+  label: PropTypes.string
 }
