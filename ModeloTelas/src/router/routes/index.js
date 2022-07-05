@@ -34,19 +34,20 @@ const ForgotPassword = lazy(() => import('../../views/ForgotPassword'))
 const Error = lazy(() => import('../../views/Error'))
 
 const StarTimeSheet = lazy(() => import('../../views/StarTimeSheet'))
-const AusenciaFunc = lazy(() => import('../../views/AusenciaFunc'))
+const AusenciaFunc = lazy(() => import('../../APL/STAR/Ausencia/AusenciaFunc'))
+
 
 // ** Merge Routes
 const Routes = [
-  {
-    path: '/StarTimeSheet',
-    element: <StarTimeSheet />
-  },
   {
     path: '/AusenciaFunc',
     element: <AusenciaFunc />
   },
   {
+    path: '/StarTimeSheet',
+    element: <StarTimeSheet />
+  },
+    {
     path: '/',
     index: true,
     element: <Navigate replace to={DefaultRoute} />

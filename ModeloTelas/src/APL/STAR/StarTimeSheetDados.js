@@ -1,4 +1,3 @@
-import axios from 'axios'
 
 /* SELECTs utilizados */
 //const SelectListaLojas = "select c.descr_gl sg, ls.ccusto_gl_cod ccusto, c.praca_cod praca from hs.loja_star ls, ccusto c where ls.ccusto_gl_cod %3D c.ccusto_gl_cod and c.is_ativo = 'S' order by 1"

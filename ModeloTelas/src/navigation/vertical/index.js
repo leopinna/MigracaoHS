@@ -11,7 +11,7 @@ children:
     navLink: '/StarTimesheet'   
   },
   {
-    id: 'STA_AuaenciaFuncionario',
+    id: 'STA_AusenciaFuncionario',
     title: 'Ausência',
     navlink: '/AusenciaFunc'
   },
@@ -19,6 +19,17 @@ children:
     id: 'STA_CorrecaoAtendimento',
     title: 'Correção ATs',
     navlink: '/CorrecaoAT'
+  }
+]
+},
+{ id: 'CLI',
+title: 'Clientes',
+children:
+[
+  {
+    id: 'CLI_LGPD',
+    title: 'Cliente LGPD',
+    navLink: '/LGPD'   
   }
 ]
 }
