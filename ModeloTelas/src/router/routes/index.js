@@ -31,15 +31,15 @@ const Login = lazy(() => import('../../views/Login'))
 const Error = lazy(() => import('../../views/Error'))
 
 const StarTimeSheet = lazy(() => import('../../views/StarTimeSheet'))
-const AusenciaFunc = lazy(() => import('../../APL/STAR/Ausencia/AusenciaFunc'))
+const AusenciaFuncionario = lazy(() => import('../../APL/STAR/Ausencia/AusenciaFunc'))
 const LGPD = lazy(() => import('../../APL/LGPD/LGPD'))
-const AprovaPendentes = lazy(() => import('../../APL/APROV/AprovacoesPendentes'))
+const AprovacoesPendentes = lazy(() => import('../../APL/APROV/AprovacoesPendentes'))
 
 // ** Merge Routes
 const Routes = [
   {
     path: '/AusenciaFunc',
-    element: <AusenciaFunc />
+    element: <AusenciaFuncionario />
   },
   {
     path: '/StarTimeSheet',
@@ -51,7 +51,7 @@ const Routes = [
   },
   {
     path: '/AprovacoesPendentes',
-    element: <AprovaPendentes />
+    element: <AprovacoesPendentes />
   },
   {
     path: '/',

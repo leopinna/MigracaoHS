@@ -9,9 +9,45 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+@font-face {
+    font-family: 'SackersStern-Heavy';
+    src: url('../fonts/SackersStern-Heavy.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'SackersStern-Regular';
+    src: url('../fonts/SackersStern-Regular.ttf') format('truetype');
+  }
+
+@font-face {
+font-family: 'Source Sans Pro';
+src: url('../fonts/SourceSansPro-Regular.ttf') format('truetype');
+		
+}
+
+@font-face {
+font-family: 'Source Sans Pro Bold';
+src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
+		
+}
+
+@font-face {
+	font-family: 'Source Sans Pro Light';
+	src: url('../fonts/SourceSansPro-Light.ttf') format('truetype');
+			
+}
+
+@font-face {
+	font-family: 'Source Sans Pro SemiBold';
+	src: url('../fonts/SourceSansPro-Semibold.ttf') format('truetype');
+			
+}
+
+//@import '../node_modules/flatpickr/dist/themes/airbnb.css';
+
 .body{
 	font-family: 'Source Sans Pro';
-	font-size: medium;
+	font-size: large;
 }
 
 .hs_label{
@@ -25,6 +61,11 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     margin-bottom: 25px;
 }
 
+.card-vendedor-timesheet{
+	margin-bottom: 15px;
+	background-color: rgb(241, 246, 248);
+}
+
 .input-group-text-timesheet-nome{
 	width:fit-content;
 	font-family: 'Source Sans Pro Bold';
@@ -34,6 +75,18 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	margin: 20px;
 }
 
+.bgapp{
+	background-color: cadetblue;
+}
+.row-form{
+	margin-bottom: 5 0 5 0;
+	padding: 5px;
+	border: 2px solid lightblue;
+	//max-width: 80%;
+	align-content: flex-start;
+	justify-content: space-between;
+}
+
 .navigation{
 	font-family: 'Source Sans Pro';
 	//font-style: 0.9em;
@@ -41,12 +94,12 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 .form-control{
 	font-family: 'Source Sans Pro';
-	//font-style: 0.9em;
+	//font-style: 1.25em;
 	//margin: 1.5rem;
 }
 
 .titulo{
-	font-family: 'SackersStern-Bold', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	font-family: 'SackersStern-Heavy';
 	text-transform: uppercase;
 }
 
@@ -68,7 +121,6 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	display: inline-flex;
 	font-family: 'Source Sans Pro';
 	//font-style: 0.9em;
-	color:cornflowerblue
 }
 
 .suggestion-item{
@@ -109,7 +161,6 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .rdt_TableCell{
 	border-right: 1px solid lightgrey;
 	text-align: center;
-	//font-weight: bold;
 	justify-content: space-around;
 	font-family: 'Source Sans Pro Bold';
 }

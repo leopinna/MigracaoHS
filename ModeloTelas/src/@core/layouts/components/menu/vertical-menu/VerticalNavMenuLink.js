@@ -11,10 +11,9 @@ import { Badge } from 'reactstrap'
 const VerticalNavMenuLink = ({ item, activeItem }) => {
   // ** Conditional Link Tag, if item has newTab or externalLink props use <a> tag else use NavLink
   const LinkTag = item.externalLink ? 'a' : NavLink
-
   // ** Hooks
   const { t } = useTranslation()
-
+  
   return (
     <li
       className={classnames({

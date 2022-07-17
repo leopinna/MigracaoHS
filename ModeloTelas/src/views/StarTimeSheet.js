@@ -6,7 +6,8 @@ import { Fragment, useState, useEffect } from 'react'
 // ** Add New Modal Component
 import  StarModalTimeSheet  from './StarModalTimeSheet'
 import  {cols, DiasSemana, dadosTeste} from '../APL/STAR/StarTimeSheetDados'
-import LOV from '../APL/Componentes/LOV'
+import ListaValores from '../APL/Componentes/LOV'
+import TimeSheetCard from '../APL/STAR/TimeSheet/TimeSheetCard'
 
 // ** Third Party Components
 import DataTable from 'react-data-table-component'
@@ -14,13 +15,11 @@ import { baseURL } from '../utility/Utils'
 
 // ** Reactstrap Imports
 import {
-  Col,
+  Col, Row, Label,
   Card,
   Input,
   Button,
   InputGroup} from 'reactstrap'
-
-import AutoComplete from '@components/autocomplete'
 
 
 let SelectCalendario = ""
@@ -41,6 +40,9 @@ const StarTimeSheet = () => {
   const [label, setLabel] = useState([cols])
   const [quadro, setQuadro] = useState([dadosTeste])
   const [dadosEdicao, setDadosEdicao] = useState([])
+  const [formato, setFormato] = useState(true)
+  const [lojaSelecionada, setLojaSelecionada] = useState('')
+
   let respQuadro
 
   const fetchDataInicio = (async () => {
@@ -69,14 +71,15 @@ const StarTimeSheet = () => {
        diaSemana = new Date(dtInicio).getDay()
        mes = new Date(dtInicio).getMonth() + 1
 
-       cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  } ${  DiasSemana[diaSemana]}`
-      
+       cols[index + 2].name = `${String(dia).padStart(2, '0')  }/${  String(mes).padStart(2, '0')  }`
+      /*  ${  DiasSemana[diaSemana] */
     }
     //console.log("------------------------------------------------------------------")
-    //console.log(cols)
+    
   
     setLabel([])
     setLabel(cols)
+    console.log(label)
 /*     setQuadro([])
     setQuadro(dadosTeste) */
    // console.log(loj)
@@ -189,66 +192,74 @@ const StarTimeSheet = () => {
    // fetchDataInicio()
 }, [])
 
+const VendedorStar = () => {
+console.log("VendedorStar")
+   if (label === null || label === undefined || label.length === 0) {
+  fetchDataInicio()
+  }
+
+  const labelDia = label
+  const listaCard = []
+  console.log(quadro)
+  console.log(`Label:${label}`)
+  
+  for (const item in quadro) {
+    //console.log(`${item} ${quadro[item].nome}:${quadro[item].id}`)
+      listaCard.push(<TimeSheetCard id={quadro[item].id} vendedor={quadro[item]} label={labelDia}/>) 
+      //<TimeSheetCard id={quadro[item].id} vendedor={quadro[item]} label={labelDia}/>
+    } 
+    console.log(`Cards:${(listaCard)}`)
+    return (<div>VendeStar:</div>)
+}
+
+const QuadroHorarios = () => {
+  console.log(`LabelQuadro:${(label)}`)
+  return (
+    <div>
+      <DataTable
+        columns={label}
+        data={quadro}
+        onRowDoubleClicked={(e) => editaregistro(e)}
+        responsive={true}
+      />
+    </div>)
+}
   return (
 
     <Fragment>
       <Card className='flex-md-row'>
-          {typeof loj !== 'undefined' ? <LOV id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA"/> : "Lista de Lojas não carregada"}
-{/*         <Col className='sm-3'>
-          <InputGroup>
-            <Button color='primary'>
-              LOJA
-            </Button>
-            <AutoComplete
-              id='selLoja'  
-              suggestions={loj}
-              filterKey='SG'
-              placeholder='Selecione a Loja'
-              suggestionLimit={6}
-              className='form-control' 
-            />
-        </InputGroup>
-        </Col> */}
+          {typeof loj !== 'undefined' ? <ListaValores id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA" x={setLojaSelecionada}/> : "Lista de Lojas não carregada"}
 
         <Col className='sm-3'>
 
         <InputGroup>
-        <Button color='primary' className='hs_label'>
+            <Button color='primary' className='hs_label'>
               ANO  |  SEMANA
             </Button>
-            <Input  className='form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' 
+            <Input  className='rc-input-number-handler-wrap form-control' id='ano' min="2019" max="2022" type="number" size="4" placeholder='Selecione o ano' 
             onChange={(e) => validate(e)} required={true}
           // onClear={setAno(0)}
             />
-            <Input className= 'form-control' /* className='d-flex flex-column align-md-items-center form-control' */ id='semana' placeholder='Selecione a semana' 
+            <Input className= 'form-control' id='semana' placeholder='Selecione a semana' 
               onChange={(e) => validate(e)} 
               //onClear={setSemana(0)}
               min="1" max="52" size="2" required={true}/>
-          {/* </InputGroup> */}
           </InputGroup>
           </Col> 
+
+          <Col className='sm-3'>
+          <Label for='switch-primary' className='form-label'>BÁSICO</Label>
+                <Input type='switch' id='switch-primary' name='tipoSaida' onChange={(e) => setFormato(e.target.checked) } defaultChecked />
+              <Label className='form-label'>MODERNO</Label>
+          </Col>
       </Card>
 
       <Card>
+        <Row>
+          {typeof quadro !== 'undefined' ? formato ? <VendedorStar /> : <QuadroHorarios /> : "Quadro não carregada"}
+        </Row>
+        {/* <QuadroHorarios /> */}
 
-        <div>
-          <DataTable
-            //noHeader
-            //pagination
-            //selectableRows
-            columns={label}
-            //paginationPerPage={20}
-            //className='react-dataTable'
-            //sortIcon={<ChevronDown size={10} />}
-            //paginationDefaultPage={currentPage + 1}
-            //paginationComponent={CustomPagination}
-            //data={searchValue.length ? filteredData : data}
-            data={quadro}//{quadro}
-            onRowDoubleClicked={(e) => editaregistro(e)}
-            responsive={true}
-            //selectableRowsComponent={BootstrapCheckbox}
-          />
-        </div>
       </Card>
      <StarModalTimeSheet open={modal} handleModal={handleModal} registro={dadosEdicao ? dadosEdicao : "Vazio"} labels={cols} xpto={atlz} />
       

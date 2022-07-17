@@ -15,7 +15,6 @@ import { useOnClickOutside } from '@hooks/useOnClickOutside'
 // ** Styles Imports
 import '@styles/base/bootstrap-extended/_include.scss'
 import './autocomplete.scss'
-import { Label } from 'reactstrap'
 
 const Autocomplete = props => {
   // ** Refs
@@ -45,6 +44,8 @@ const Autocomplete = props => {
     if (props.onSuggestionClick) {
       props.onSuggestionClick(url, e)
     }
+
+    props.selectedValue(filteredData[activeSuggestion][props.filterKey])
   }
 
   // ** Suggestion Hover Event
@@ -58,6 +59,7 @@ const Autocomplete = props => {
     setActiveSuggestion(0)
     setShowSuggestions(true)
     setUserInput(userInput)
+    props.selectedValue(userInput)
     if (e.target.value < 1) {
       setShowSuggestions(false)
     }
@@ -91,10 +93,12 @@ const Autocomplete = props => {
       // ** User Pressed ESC
       setShowSuggestions(false)
       setUserInput('')
+      props.selectedValue('')
     } else if (e.keyCode === 13 && showSuggestions) {
       // ** User Pressed ENTER
       onSuggestionItemClick(filteredData[activeSuggestion].link, e)
       setUserInput(filteredData[activeSuggestion][filterKey])
+      props.selectedValue(filteredData[activeSuggestion][filterKey])
       setShowSuggestions(false)
     } else {
       return
@@ -272,6 +276,7 @@ const Autocomplete = props => {
     // ** Function to run on user passed Clear Input
     if (props.clearInput) {
       props.clearInput(userInput, setUserInput)
+      props.selectedValue(userInput)
     }
 
     // ** Function on Suggestions Shown
@@ -304,6 +309,7 @@ const Autocomplete = props => {
       </PerfectScrollbar>
     )
   }
+
 
   return (
     <div className='autocomplete-container' ref={container}>
@@ -353,6 +359,8 @@ Autocomplete.propTypes = {
   onSuggestionItemClick: PropTypes.func,
   filterKey: PropTypes.string.isRequired,
   suggestions: PropTypes.array.isRequired,
+  selectedValue: PropTypes.func,
+  onBlur: PropTypes.func,
   id: PropTypes.string,
   label: PropTypes.string
 }

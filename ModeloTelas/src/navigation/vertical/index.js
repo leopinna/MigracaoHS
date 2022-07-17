@@ -6,7 +6,7 @@ children:
   {
     id: 'STA_AusenciaFuncionario',
     title: 'Ausência',
-    navlink: '/AusenciaFunc'
+    navLink: '/AusenciaFunc'
   },
   {
     id: 'STA',
@@ -16,7 +16,7 @@ children:
     {
     id: 'STA_CorrecaoAtendimento',
     title: 'Correção ATs',
-    navlink: '/CorrecaoAT'
+    navLink: '/CorrecaoAT'
   }
 ]
 },
@@ -33,6 +33,6 @@ children:
 },
 { id: 'APV',
 title: 'Aprovações Pendentes',
-navlink: '/AprovaPendentes'
+navLink: '/AprovacoesPendentes'
 }
 ]

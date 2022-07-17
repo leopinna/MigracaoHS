@@ -84,10 +84,10 @@ export const selectThemeColors = theme => ({
 })
 
   // ** Converts table to CSV
-  export function convertArrayOfObjectsToCSV(array) {
+  export function convertArrayOfObjectsToCSV(array, delimiter = ',') {
     let result
 
-    const columnDelimiter = ','
+    const columnDelimiter = delimiter
     const lineDelimiter = '\n'
     const keys = Object.keys(data[0])
 
