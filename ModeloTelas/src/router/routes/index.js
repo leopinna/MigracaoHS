@@ -27,15 +27,13 @@ const TemplateTitle = 'Apps - HSTERN'
 const DefaultRoute = '/home'
 
 const Home = lazy(() => import('../../views/Home'))
-const SecondPage = lazy(() => import('../../views/SecondPage'))
 const Login = lazy(() => import('../../views/Login'))
-const Register = lazy(() => import('../../views/Register'))
-const ForgotPassword = lazy(() => import('../../views/ForgotPassword'))
 const Error = lazy(() => import('../../views/Error'))
 
 const StarTimeSheet = lazy(() => import('../../views/StarTimeSheet'))
 const AusenciaFunc = lazy(() => import('../../APL/STAR/Ausencia/AusenciaFunc'))
-
+const LGPD = lazy(() => import('../../APL/LGPD/LGPD'))
+const AprovaPendentes = lazy(() => import('../../APL/APROV/AprovacoesPendentes'))
 
 // ** Merge Routes
 const Routes = [
@@ -47,7 +45,15 @@ const Routes = [
     path: '/StarTimeSheet',
     element: <StarTimeSheet />
   },
-    {
+  {
+    path: '/LGPD',
+    element: <LGPD />
+  },
+  {
+    path: '/AprovacoesPendentes',
+    element: <AprovaPendentes />
+  },
+  {
     path: '/',
     index: true,
     element: <Navigate replace to={DefaultRoute} />
@@ -57,26 +63,8 @@ const Routes = [
     element: <Home />
   },
   {
-    path: '/second-page',
-    element: <SecondPage />
-  },
-  {
     path: '/login',
     element: <Login />,
-    meta: {
-      layout: 'blank'
-    }
-  },
-  {
-    path: '/register',
-    element: <Register />,
-    meta: {
-      layout: 'blank'
-    }
-  },
-  {
-    path: '/forgot-password',
-    element: <ForgotPassword />,
     meta: {
       layout: 'blank'
     }

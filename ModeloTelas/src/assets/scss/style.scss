@@ -14,6 +14,11 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	font-size: medium;
 }
 
+.hs_label{
+	font-family: 'Source Sans Pro';
+	//font-style: 0.9em;
+}
+
 .input-group-text-timesheet{
 	padding: 5px;
     width: 80px;
@@ -31,17 +36,18 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 
 .navigation{
 	font-family: 'Source Sans Pro';
-	font-style: 0.9em;
+	//font-style: 0.9em;
 }
 
 .form-control{
 	font-family: 'Source Sans Pro';
-	font-style: 0.9em;
+	//font-style: 0.9em;
 	//margin: 1.5rem;
 }
 
 .titulo{
 	font-family: 'SackersStern-Bold', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	text-transform: uppercase;
 }
 
 /* .autocomplete-container{
@@ -57,10 +63,16 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 }
 
 .lov{
-	font-style: 0.857rem;
 	height: 1.5em;
 	padding: 11px;
 	display: inline-flex;
+	font-family: 'Source Sans Pro';
+	//font-style: 0.9em;
+	color:cornflowerblue
+}
+
+.suggestion-item{
+	font-family: 'Source Sans Pro';
 }
 
 .rdt_Table{

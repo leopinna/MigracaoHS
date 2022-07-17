@@ -16,7 +16,7 @@ const StarModalTimeSheet = ({ open, handleModal, registro, labels, xpto }) => {
   const dadosAlteracao = registro
   const labelDias = labels
 
-  console.log(`Labels:${labelDias}`)
+  //console.log(`Labels:${labelDias}`)
 
   // ** Custom close btn
   const CloseBtn = <X className='cursor-pointer' size={15} onClick={handleModal} />

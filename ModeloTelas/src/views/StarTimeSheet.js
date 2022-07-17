@@ -42,7 +42,6 @@ const StarTimeSheet = () => {
   const [quadro, setQuadro] = useState([dadosTeste])
   const [dadosEdicao, setDadosEdicao] = useState([])
   let respQuadro
-  let lojas 
 
   const fetchDataInicio = (async () => {
     let queryDiaSemana = SelectCalendario
@@ -170,17 +169,23 @@ const StarTimeSheet = () => {
   }
 
   async function fetchLoja () {
-    const resp =  fetch(baseURL.concat(`HSQuery/${SelectListaLojas}`))
-    lojas =  await resp.json
-    console.log(`RESP:${resp.}`)
     console.log(baseURL.concat(`HSQuery/${SelectListaLojas}`))
-    setLoj(lojas)
+    const resp =  await fetch(baseURL.concat(`HSQuery/${SelectListaLojas}`))
+
+     if (resp.ok) {
+        const lojas =  await resp.json()
+        setLoj(lojas)
+     } else console.log(`ERRO:${(resp.text())}`)
+
+     return resp
+/*     console.log(baseURL.concat(`HSQuery/${SelectListaLojas}`))
+    console.log(`UseEffect:${lojas}`)
+
+    console.log(`Use:${loj}`) */
   }
 
   useEffect(() => {
     fetchLoja()
-    console.log(`UseEffect:${lojas}`)
-    console.log(`Use:${loj}`)
    // fetchDataInicio()
 }, [])
 
@@ -188,6 +193,7 @@ const StarTimeSheet = () => {
 
     <Fragment>
       <Card className='flex-md-row'>
+          {typeof loj !== 'undefined' ? <LOV id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA"/> : "Lista de Lojas não carregada"}
 {/*         <Col className='sm-3'>
           <InputGroup>
             <Button color='primary'>
@@ -204,12 +210,10 @@ const StarTimeSheet = () => {
         </InputGroup>
         </Col> */}
 
-        {typeof lojas !== 'undefined' ? <LOV id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA"/> : "<H2>NADA</H2>"}
-
         <Col className='sm-3'>
 
         <InputGroup>
-        <Button color='primary'>
+        <Button color='primary' className='hs_label'>
               ANO  |  SEMANA
             </Button>
             <Input  className='form-control' id='ano' min="2019" type="number" size="4" placeholder='Selecione o ano' 

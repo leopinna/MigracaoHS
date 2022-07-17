@@ -1,21 +1,19 @@
-import { Mail, Home, Star } from 'react-feather'
-
 export default [
 { id: 'STAR',
 title: 'Programa Star',
 children:
 [
   {
-    id: 'STA',
-    title: 'TimeSheet',
-    navLink: '/StarTimesheet'   
-  },
-  {
     id: 'STA_AusenciaFuncionario',
     title: 'Ausência',
     navlink: '/AusenciaFunc'
   },
   {
+    id: 'STA',
+    title: 'TimeSheet',
+    navLink: '/StarTimesheet'   
+  },
+    {
     id: 'STA_CorrecaoAtendimento',
     title: 'Correção ATs',
     navlink: '/CorrecaoAT'
@@ -32,5 +30,9 @@ children:
     navLink: '/LGPD'   
   }
 ]
+},
+{ id: 'APV',
+title: 'Aprovações Pendentes',
+navlink: '/AprovaPendentes'
 }
 ]

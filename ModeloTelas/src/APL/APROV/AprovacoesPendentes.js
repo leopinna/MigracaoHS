@@ -1,12 +1,12 @@
 import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from 'reactstrap'
 
-const Home = () => {
+const AprovacoesPendentes = () => {
   return (
     <div>
 
       <Card>
         <CardHeader>
-          <CardTitle className='titulo'>Aplicações HS</CardTitle>
+          <CardTitle className='titulo'>Aprovações</CardTitle>
         </CardHeader>
         
       </Card>
@@ -14,4 +14,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default AprovacoesPendentes
