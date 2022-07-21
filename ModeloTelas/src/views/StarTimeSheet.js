@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 // ** React Imports
 import { Fragment, useState, useEffect } from 'react'
 
@@ -7,7 +8,7 @@ import { Fragment, useState, useEffect } from 'react'
 import  StarModalTimeSheet  from './StarModalTimeSheet'
 import  {cols, DiasSemana, dadosTeste} from '../APL/STAR/StarTimeSheetDados'
 import ListaValores from '../APL/Componentes/LOV'
-import TimeSheetCard from '../APL/STAR/TimeSheet/TimeSheetCard'
+import {TimeSheetCard} from '../APL/STAR/TimeSheet/TimeSheetCard'
 
 // ** Third Party Components
 import DataTable from 'react-data-table-component'
@@ -20,15 +21,21 @@ import {
   Input,
   Button,
   InputGroup} from 'reactstrap'
+  import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js'
+  import { Navigation, Pagination, Virtual, A11y } from 'swiper'
+  import 'swiper/swiper-bundle.css' // core Swiper
+  //import 'swiper/swiper.scss'
+  import 'swiper/modules/navigation/navigation.scss' // Navigation module
+import 'swiper/modules/pagination/pagination.scss' // Pagination module
 
-
-let SelectCalendario = ""
+  let SelectCalendario = ""
 
 
 const SelectListaLojas = "select%20c.praca_cod||' - '||c.sigla_cod%20sg%2Cc.descr_gl%20descr%2C%20ls.ccusto_gl_cod%20ccusto%2C%20c.praca_cod%20praca%20from%20hs.loja_star%20ls%2C%20ccusto%20c%20where%20ls.ccusto_gl_cod%20%253D%20c.ccusto_gl_cod%20and%20c.is_ativo%20%3D%20%27S%27%20order%20by%201"
 SelectCalendario = "select%20dt_inicio_semana%20from%20calendario_star%20where%20ano_num=^%20and%20semana_num=~%20and%20dt_inicio_semana%20<=%20dt_fim_semana"
 const QuadroHorasURL = "MetaVendedor/GetQuadroHoras?CcustoGlCod={0}&Ano={1}&Semana={2}"
 const AnoCorrente = new Date().getFullYear()
+const AnoMinimo = AnoCorrente - 3
 let ano = 0
 let semana = 0
 
@@ -79,7 +86,7 @@ const StarTimeSheet = () => {
   
     setLabel([])
     setLabel(cols)
-    console.log(label)
+    console.log("FetchDataInicio:", label)
 /*     setQuadro([])
     setQuadro(dadosTeste) */
    // console.log(loj)
@@ -111,8 +118,8 @@ const StarTimeSheet = () => {
   
   function validate(e) {
     //console.log(`ID:${e.target.id}`)
+    const campo = document.getElementById(e.target.id)
       if (e.target.id === 'semana') {
-        const campo = document.getElementById("semana")
         if (e.target.value < 1 || e.target.value > 52 || e.target.value === "") {
           campo.style.borderColor = "red"
           campo.style.borderWidth = "1px"
@@ -138,11 +145,24 @@ const StarTimeSheet = () => {
         if (e.target.value === null) ano = 0 
 
         if (String(e.target.value).length === 4) {
-          console.log(`V:${e.target.value}`)
-          console.log(`D:${AnoCorrente}`)
-          if (e.target.value < 2019 || e.target.value > AnoCorrente) console.log('Ano Inválido')
-          else {
+          if (e.target.value < 2019 || e.target.value > AnoCorrente) {
+            campo.style.borderColor = "red"
+            campo.style.borderWidth = "1px"
+            
+            console.log('Ano Inválidoa')
+            campo.setCustomValidity('Inválido')
+  
+            campo.innerHTML =  `O ano deve estar entre ${  AnoMinimo  } e ${  AnoCorrente}`
+  
+            semana = 0
+            setQuadro([])
+          } else {
             ano = e.target.value
+            
+            campo.setCustomValidity("")
+            campo.innerText = ""
+            campo.style.borderColor = ""
+            campo.style.borderWidth = "1px"            
             //console.log(`A:${ano} / ${e.target.value}`)
           }
         } else console.log("ZEROU")//setAno(0)
@@ -192,28 +212,42 @@ const StarTimeSheet = () => {
    // fetchDataInicio()
 }, [])
 
-const VendedorStar = () => {
+const VendedorStar = (q) => {
 console.log("VendedorStar")
-   if (label === null || label === undefined || label.length === 0) {
+/*    if (label === null || label === undefined || label.length === 0) {
+    console.log("FETCH")
   fetchDataInicio()
-  }
+  } */
+/*            quadro.forEach(e => {
+              console.log(`${e.nome} ${e.id}`)
+              //<TimeSheetCard id={e.id} vendedor={e} label={label} />
+              //<div>"XPTO1234"</div>
+              //saida(e)
+              //<saida />
+              //<Label>DETALHE</Label>
+            }
+              //<TimeSheetCard id={e.id} vendedor={e} label={label}/>
+            )*/
 
   const labelDia = label
   const listaCard = []
-  console.log(quadro)
-  console.log(`Label:${label}`)
+  let item
+  console.log("Q", q.quadro)
+  console.log("LabelVendedo:", label)
   
-  for (const item in quadro) {
-    //console.log(`${item} ${quadro[item].nome}:${quadro[item].id}`)
-      listaCard.push(<TimeSheetCard id={quadro[item].id} vendedor={quadro[item]} label={labelDia}/>) 
-      //<TimeSheetCard id={quadro[item].id} vendedor={quadro[item]} label={labelDia}/>
+  for (item in q.quadro) {
+    console.log(`${item} ${q.quadro[item].id} ${q.quadro[item]}`)
+      listaCard.push(<TimeSheetCard key={q.quadro[item].id} vendedor={q.quadro[item]} label={labelDia}/>) 
+     // <TimeSheetCard id={quadro[item].id} vendedor={quadro[item]} label={labelDia} />
     } 
-    console.log(`Cards:${(listaCard)}`)
-    return (<div>VendeStar:</div>)
+    console.log("Cards:", listaCard)
+
+    return (listaCard)
 }
 
 const QuadroHorarios = () => {
-  console.log(`LabelQuadro:${(label)}`)
+  //console.log(`LabelQuadro:${(label)}`)
+  console.log('LabelQuadro:', label)
   return (
     <div>
       <DataTable
@@ -224,42 +258,73 @@ const QuadroHorarios = () => {
       />
     </div>)
 }
+
+
   return (
 
     <Fragment>
-      <Card className='flex-md-row'>
+       <Card className='flex-md-row'>
           {typeof loj !== 'undefined' ? <ListaValores id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA" x={setLojaSelecionada}/> : "Lista de Lojas não carregada"}
 
         <Col className='sm-3'>
 
-        <InputGroup>
-            <Button color='primary' className='hs_label'>
-              ANO  |  SEMANA
-            </Button>
-            <Input  className='rc-input-number-handler-wrap form-control' id='ano' min="2019" max="2022" type="number" size="4" placeholder='Selecione o ano' 
-            onChange={(e) => validate(e)} required={true}
-          // onClear={setAno(0)}
-            />
-            <Input className= 'form-control' id='semana' placeholder='Selecione a semana' 
+            <Label className='form-label'>ANO</Label>
+{/*             <InputNumber
+                        min={2019}
+                        max={2022}
+                        upHandler={<Plus size={32}/>}
+                        //className='form-control'
+                        defaultValue={AnoCorrente}
+                        downHandler={<Minus size={32}/>}
+                       // onChange={(e) => validate(e)}
+                      /> */}
+             <Input  className='autocomplete-conteiner form-control' id='ano' min={AnoMinimo} max={AnoCorrente} type="number" size="4" placeholder='Selecione o ano' 
+            onChange={(e) => validate(e)} required={true}/> 
+          </Col>
+          
+          <Col className='sm-3'>
+            <Label className='form-label'>SEMANA</Label>
+            <Input className= 'form-control' id='semana' placeholder='Selecione a semana' type='number'
               onChange={(e) => validate(e)} 
               //onClear={setSemana(0)}
               min="1" max="52" size="2" required={true}/>
-          </InputGroup>
           </Col> 
 
-          <Col className='sm-3'>
-          <Label for='switch-primary' className='form-label'>BÁSICO</Label>
+          <Col className='sm-3 seletor-layout'>
+          <Label for='switch-primary' className='form-label' id='seletor-layout'>BÁSICO</Label>
                 <Input type='switch' id='switch-primary' name='tipoSaida' onChange={(e) => setFormato(e.target.checked) } defaultChecked />
-              <Label className='form-label'>MODERNO</Label>
+              <Label className='form-label' id='seletor-layout'>    MODERNO</Label>
           </Col>
       </Card>
 
-      <Card>
-        <Row>
-          {typeof quadro !== 'undefined' ? formato ? <VendedorStar /> : <QuadroHorarios /> : "Quadro não carregada"}
-        </Row>
-        {/* <QuadroHorarios /> */}
+      <Card className='flex-md-row'>
+          {typeof quadro !== 'undefined' ? 
+            formato ? 
+            <Swiper
+            modules={[Navigation, Pagination, Virtual, A11y]}
+      spaceBetween={100}
+      slidesPerView={4}
+      navigation
+      pagination={{ clickable: true }}
+      //scrollbar={{ draggable: true }}
+      onSwiper={(swiper) => console.log(swiper)}
+      virtual
+      //onSlideChange={() => console.log('slide change')}
+    >
 
+            {quadro.map((reg, idx) => {
+               return       <SwiperSlide> <TimeSheetCard   key={idx} vendedor={reg} label={label} /> </SwiperSlide>
+               //console.log("E:", reg) 
+              }) 
+          }
+              <SwiperSlide>  </SwiperSlide>
+              </Swiper>
+                        //
+            //console.log("E:", e) }
+            //{ quadro.map(e => {<TimeSheetCard {...e} />} , quadro) } 
+              //<VendedorStar quadro={quadro}/> 
+            : <QuadroHorarios /> : "Quadro não carregada"}
+        {/* <QuadroHorarios /> */}     
       </Card>
      <StarModalTimeSheet open={modal} handleModal={handleModal} registro={dadosEdicao ? dadosEdicao : "Vazio"} labels={cols} xpto={atlz} />
       

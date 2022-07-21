@@ -124,6 +124,12 @@ public class MetaFuncSemanaStarController : Controller
                         Ano = qd.AnoNum,
                         Semana = qd.SemanaNum,
                         Ccusto = qd.CcustoGlCod,
+                        MetaMinimaPrevista = qd.MetaMinimaPrevista,
+                        MetaOuroNobrePrevista = qd.MetaOuroNobrePrevista,
+                        MetaStarPrevista = qd.MetaStarPrevista,
+                        MetaMinimaRealizada = qd.MetaMinimaRealizada,
+                        MetaOuroNobreRealizada = qd.MetaOuroNobreRealizada,
+                        MetaStarRealizada = qd.MetaStarRealizada,
                         Total = (qd.MetaFuncQuadroHoras.Sum(d => d.QtdHorasPrevista))
                     }).Where(q => q.Ano == parametros.Ano &&
                         q.Ccusto == parametros.CcustoGlCod &&

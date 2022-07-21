@@ -302,7 +302,7 @@ const Autocomplete = props => {
           [props.wrapperClass]: props.wrapperClass
         })}
         ref={suggestionsListRef}
-        component='ul'
+        component='ol'
         options={{ wheelPropagation: false }}
       >
         {renderSuggestions()}

@@ -11,8 +11,6 @@ import { X } from 'react-feather'
   const [valListaSelec, setvalListaSelec] = useState()
   let sel
 
-  console.log(".......................................")
- 
   useEffect(() => {
     console.log(`ValorSelecionadoLOV:${valListaSelec}`)
     //XPTO(valListaSelec)
@@ -22,13 +20,11 @@ import { X } from 'react-feather'
   const valSelecionado = (item) => {
       sel = item
       setvalListaSelec(sel)  
-      console.log(`Item:${item}`) 
       console.log(`LOV:${sel}`)
-      console.log(`ValorState:${valListaSelec}`)
       //XPTO(sel)
   
       props.x(sel)
-      console.log('props obj:', props)
+      //console.log('props obj:', props)
   }
 
   const valorLOV = (item) => {
@@ -37,8 +33,7 @@ import { X } from 'react-feather'
   return (
     <Fragment>
       <Col className='sm-3'>
-          <InputGroup>
-            <Label className='form-label' size='sm'>
+            <Label className='form-label'>
               {props.label}
             </Label>
             <AutoComplete
@@ -47,13 +42,12 @@ import { X } from 'react-feather'
               filterKey={props.colFiltro}
               placeholder={props.placeholder}
               suggestionLimit={8}
-              className='form-control lov'
+              className='form-control'
               selectedValue={valSelecionado}
               //onBlur={props.onBlur}         
               //autoFocus={true}
               //onChange={e => onChange(e)} 
             />
-          </InputGroup>
           {/* {props.valorLov(valor)} */}
       </Col>
     </Fragment>

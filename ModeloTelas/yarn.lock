@@ -12307,7 +12307,7 @@
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.1.9.tgz"
   "version" "11.1.9"
 
-"swiper@7.2.0":
+"swiper@^7.2.0":
   "integrity" "sha512-CUL6Nvzcf3fU0b8dHaraYphgBT7l44PY1B6T8b+E12pim4DEcwFZDy/KZoIKrAnn+rfbayCmcksYmSDIP5nDHg=="
   "resolved" "https://registry.npmjs.org/swiper/-/swiper-7.2.0.tgz"
   "version" "7.2.0"

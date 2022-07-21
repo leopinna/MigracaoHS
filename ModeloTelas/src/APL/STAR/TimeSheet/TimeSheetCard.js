@@ -42,24 +42,29 @@ const Dias = props => {
     return null
 }
 
-const TimeSheetCard = props => {
-     return <h2>{props.vendedor.nome}</h2>
+export  const TimeSheetCard = (props) => {
+ //   const listaLabelDias = [props.label]
+    console.log("PROPS : ", props)
+ //return <h2>{props.vendedor.nome}</h2>
     return (
         <Fragment>
-            <Col className="sm-9">
-                <Card  className="card-vendedor-timesheet">
-                <Row className="sm-9">
-                        <Col className="sm-6 titulo">
+            <Col  className="card-vendedor-timesheet">
+                <Card >
+                <Row>
+                        <Col className="sm-9 titulo">
                             <h6>{props.vendedor.nome}</h6>
+                        </Col>
+                        <Col className="sm-12">
                             <Avatar img={require('@src/assets/images/Avatar/user01.jpg').default} size='sm'/>
                         </Col>
                     </Row>
 
                     <hr/>
-                    {props.label} 
- {/*                    <Row className="sm-9">
-                        <Dias label={props.label} />
-                    </Row>*/}
+                                       
+{/*                     <Row className="sm-9">
+                        {/* <Dias label={props.label} /> 
+                        DIAS
+                    </Row> */}
                     <hr/>
 
                     <Row className="sm-6">
@@ -70,5 +75,3 @@ const TimeSheetCard = props => {
         </Fragment>
     )
 }
-
-export default TimeSheetCard
