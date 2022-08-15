@@ -12,7 +12,7 @@ const MenuContexto = () => {
             </Button>
             
             <UncontrolledPopover placement='bottom' target='uncontrolledPopover'>
-                <Col sm='1' style={{width: "60px", justifyContent:"center"}}>
+                <Col sm={1} style={{width: "60px", justifyContent:"center"}}>
                 <PopoverBody>
                 <Button size='xs' outline color='primary' id='item1' style={{padding: "10px"}}><Printer size={16} /> </Button>
                 <Button size='xs' outline color='primary' id='item2' style={{padding: "10px"}}><Plus  size={16} /> </Button>
@@ -20,7 +20,7 @@ const MenuContexto = () => {
                 <Button size='xs' outline color='primary' id='item4' style={{padding: "10px"}}><Trash size={16} /> </Button>
                 
                 </PopoverBody>
-                </Col>
+                </Col> 
             </UncontrolledPopover>
         </Fragment>
         )

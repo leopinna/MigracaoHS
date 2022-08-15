@@ -29,6 +29,7 @@ import {
   //import 'swiper/swiper.scss'
   import 'swiper/modules/navigation/navigation.scss' // Navigation module
 import 'swiper/modules/pagination/pagination.scss' // Pagination module
+import InputNumber from 'rc-input-number'
 
   let SelectCalendario = ""
 
@@ -310,6 +311,7 @@ const QuadroHorarios = () => {
       </Card>
 
       <Card className='flex-md-row'>
+      {/* <InputNumber id="anoID" min="2019" max="2022" controls={true}>S E M A</InputNumber> */}
           {typeof quadro !== 'undefined' ? 
             formato ? 
             <Swiper
