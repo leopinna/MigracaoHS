@@ -59,12 +59,22 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 	font-family: 'Source Sans Pro';
 	text-transform: uppercase;
 	padding-left: 10px;
+	margin: 3px 0 0px 0;
+	font-size: .85em;
 }
 
 .input-group-text-timesheet{
 	padding: 5px;
     width: 80px;
     margin-bottom: 25px;
+}
+
+.input-group-text{
+    height: 1em;
+    justify-items: center;
+    margin-top: 24px;
+    border-color: white;
+	font-family: 'Source Sans Pro Bold';	
 }
 
 .seletor-layout{
@@ -88,7 +98,7 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 	padding: 10px;
 	min-width: 264px;
 	min-height: 312px;
-	background-color: cornsilk;
+	background-color: white;
 	border-radius: 5px;
 	border: 2px solid black;
 	margin: 10px
@@ -100,11 +110,7 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 }
 
 .ausencia-principal{
-	margin: 16px;
-}
-
-.sm-3{
-	padding-bottom: inherit;
+	margin: 16px 0 16px 0;
 }
 
 .bgapp{
@@ -134,8 +140,16 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 	//font-style: 0.9em;
 }
 
+.flatpicker-input{
+    padding: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
+    font-weight: 600;
+    color: black;
+}
+
 .form-control{
 	font-family: 'Source Sans Pro';
+	margin: 5 0 5 0;
 	//font-style: 1.25em;
 	//margin: 1.5rem;
 }

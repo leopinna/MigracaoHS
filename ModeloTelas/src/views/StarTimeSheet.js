@@ -8,11 +8,13 @@ import { Fragment, useState, useEffect } from 'react'
 import  StarModalTimeSheet  from './StarModalTimeSheet'
 import  {cols, DiasSemana, dadosTeste} from '../APL/STAR/StarTimeSheetDados'
 import ListaValores from '../APL/Componentes/LOV'
+import MenuContexto from '../APL/Componentes/MenuContexto'
 import {TimeSheetCard} from '../APL/STAR/TimeSheet/TimeSheetCard'
 
 // ** Third Party Components
 import DataTable from 'react-data-table-component'
 import { baseURL } from '../utility/Utils'
+import { Plus } from 'react-feather'
 
 // ** Reactstrap Imports
 import {
@@ -264,9 +266,13 @@ const QuadroHorarios = () => {
 
     <Fragment>
        <Card className='flex-md-row'>
-          {typeof loj !== 'undefined' ? <ListaValores id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA" x={setLojaSelecionada}/> : "Lista de Lojas não carregada"}
+          {typeof loj !== 'undefined' ? 
+          <Col className='px-2'>
+          <ListaValores id='selLoja' lista={loj} colFiltro='SG' placeholder='Escolha na lista' label="LOJA" x={setLojaSelecionada}/>
+          </Col>
+           : "Lista de Lojas não carregada"}
 
-        <Col className='sm-3'>
+        <Col className='sm-3  px-3'>
 
             <Label className='form-label'>ANO</Label>
 {/*             <InputNumber
@@ -278,11 +284,11 @@ const QuadroHorarios = () => {
                         downHandler={<Minus size={32}/>}
                        // onChange={(e) => validate(e)}
                       /> */}
-             <Input  className='autocomplete-conteiner form-control' id='ano' min={AnoMinimo} max={AnoCorrente} type="number" size="4" placeholder='Selecione o ano' 
+             <Input  className='form-control' id='ano' min={AnoMinimo} max={AnoCorrente} type="number" size="4" placeholder='Selecione o ano' 
             onChange={(e) => validate(e)} required={true}/> 
           </Col>
           
-          <Col className='sm-3'>
+          <Col sm="3" className='px-3'>
             <Label className='form-label'>SEMANA</Label>
             <Input className= 'form-control' id='semana' placeholder='Selecione a semana' type='number'
               onChange={(e) => validate(e)} 
@@ -290,11 +296,17 @@ const QuadroHorarios = () => {
               min="1" max="52" size="2" required={true}/>
           </Col> 
 
-          <Col className='sm-3 seletor-layout'>
-          <Label for='switch-primary' className='form-label' id='seletor-layout'>BÁSICO</Label>
-                <Input type='switch' id='switch-primary' name='tipoSaida' onChange={(e) => setFormato(e.target.checked) } defaultChecked />
-              <Label className='form-label' id='seletor-layout'>    MODERNO</Label>
+          <Col className='sm-3 d-inline pt-2'>
+            <Col className='xs-2 d-inline'>BÁSICO</Col>
+            <Col className='sm-4 form-switch d-inline'>
+           <Input type='checkbox' id='switch-primary' name='tipoSaida' onChange={(e) => setFormato(e.target.checked) } defaultChecked /> 
+           </Col>
+           <Col className='xs-2 d-inline'>MODERNO</Col>
           </Col>
+          <Col sm="1">
+                      <MenuContexto />
+          </Col>
+          
       </Card>
 
       <Card className='flex-md-row'>
@@ -317,7 +329,7 @@ const QuadroHorarios = () => {
                //console.log("E:", reg) 
               }) 
           }
-              <SwiperSlide>  </SwiperSlide>
+              <SwiperSlide> <Plus size={64} color='primary'/> </SwiperSlide>
               </Swiper>
                         //
             //console.log("E:", e) }

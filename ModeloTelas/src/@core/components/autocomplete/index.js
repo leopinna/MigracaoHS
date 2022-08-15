@@ -153,7 +153,9 @@ const Autocomplete = props => {
 
   // ** Function To Render Ungrouped Suggestions
   const renderUngroupedSuggestions = () => {
+    console.log("PropsAC:", props)
     const { filterKey, suggestions, customRender, suggestionLimit } = props
+    console.log("renderUngroupedSuggestions", typeof (suggestions),  suggestions)
 
     filteredData = []
     const sortSingleData = suggestions

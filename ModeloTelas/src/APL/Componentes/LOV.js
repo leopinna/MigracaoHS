@@ -1,12 +1,11 @@
-import {Col, InputGroup, Label} from 'reactstrap'
+import {Label} from 'reactstrap'
 import AutoComplete from '@components/autocomplete'
 import PropTypes from 'prop-types'
 import { useState, Fragment, useEffect } from 'react'
-import { X } from 'react-feather'
 
 
 //const ListaValores = props => {
-  export default function ListaValores(props) {
+  export default function ListaValores  (props) {
 
   const [valListaSelec, setvalListaSelec] = useState()
   let sel
@@ -21,7 +20,6 @@ import { X } from 'react-feather'
       sel = item
       setvalListaSelec(sel)  
       console.log(`LOV:${sel}`)
-      //XPTO(sel)
   
       props.x(sel)
       //console.log('props obj:', props)
@@ -32,8 +30,7 @@ import { X } from 'react-feather'
 
   return (
     <Fragment>
-      <Col className='sm-3'>
-            <Label className='form-label'>
+            <Label className='form-label' for={props.id}>
               {props.label}
             </Label>
             <AutoComplete
@@ -44,22 +41,17 @@ import { X } from 'react-feather'
               suggestionLimit={8}
               className='form-control'
               selectedValue={valSelecionado}
-              //onBlur={props.onBlur}         
-              //autoFocus={true}
-              //onChange={e => onChange(e)} 
             />
-          {/* {props.valorLov(valor)} */}
-      </Col>
     </Fragment>
   )
 }
 
 //export default ListaValores
 
-/* ListaValores.propTypes = {
+ ListaValores.propTypes = {
   id: PropTypes.string.isRequired,
   colFiltro: PropTypes.string.isRequired,
-  lista: PropTypes.array,
+  lista: PropTypes.array.isRequired,
   valorLOV: PropTypes.func,
   placeholder: PropTypes.string,
   label: PropTypes.string,
@@ -67,4 +59,4 @@ import { X } from 'react-feather'
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   x: PropTypes.func
-  } */
+  } 
