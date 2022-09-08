@@ -50,6 +50,12 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 	font-size: large;
 }
 
+.img-navbar{
+	max-width: 66%;
+    height: auto;
+	margin-left: 0.6em;
+}
+
 .hs_label{
 	font-family: 'Source Sans Pro';
 	//font-style: 0.9em;
@@ -58,8 +64,7 @@ src: url('../fonts/SourceSansPro-Bold.ttf') format('truetype');
 .form-label{
 	font-family: 'Source Sans Pro';
 	text-transform: uppercase;
-	padding-left: 10px;
-	margin: 3px 0 0px 0;
+	margin: 1.7em 0 0 0;
 	font-size: .85em;
 }
 

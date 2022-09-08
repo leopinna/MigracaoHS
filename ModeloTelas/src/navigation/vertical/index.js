@@ -1,6 +1,9 @@
+import {Star, Users, ThumbsUp} from 'react-feather'
+
 export default [
 { id: 'STAR',
 title: 'Programa Star',
+icon: <Star size={16} />,
 children:
 [
   {
@@ -22,6 +25,7 @@ children:
 },
 { id: 'CLI',
 title: 'Clientes',
+icon: <Users size={16} />,
 children:
 [
   {
@@ -33,6 +37,7 @@ children:
 },
 { id: 'APV',
 title: 'Aprovações Pendentes',
-navLink: '/AprovacoesPendentes'
+navLink: '/AprovacoesPendentes',
+icon: <ThumbsUp size={16} />
 }
 ]

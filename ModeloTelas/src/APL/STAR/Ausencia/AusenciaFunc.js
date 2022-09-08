@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, CardTitle, InputGroup, Button, Input, Row, Label, Col, Container, Form } from 'reactstrap'
+import { Card, CardBody, InputGroup, Button, Input, Row, Label, Container, Form } from 'reactstrap'
 import ListaValores  from '../../Componentes/LOV'
 //src\APL\Componentes\LOV.js
 import { Fragment, useState, useEffect, useRef } from 'react'
@@ -8,8 +8,9 @@ import  pt from 'flatpickr/dist/l10n/pt'
 import 'flatpickr/dist/themes/dark.css'
 
 import Flatpickr from "react-flatpickr"
-import { Calendar, Plus, Minus } from 'react-feather'
 import DataTable from 'react-data-table-component'
+import { LojaAPI }  from '../../API/LojaAPI'
+import { PessoaAPI }  from '../../API/PessoaAPI'
 
 
 const options = {
@@ -42,6 +43,7 @@ export default function AusenciaFunc () {
   const [vendedorSelecionado, setVendedorSelecionado] = useState()
   const [lojaSelecionada, setLojaSelecionada] = useState()
   const [ausencia, setAusencia] = useState()
+  const [periodoAusencia, setPeriodoAusencia] = useState([])
 
   const [formObject, setFormObject] = useState({
     loja: '',
@@ -52,6 +54,9 @@ export default function AusenciaFunc () {
     justificativa: ''
   })
 
+  //LojaAPI.getLojasStar(false).then((xpto) => console.log(xpto))
+  //LojaAPI.getLojasStarPaginated(5, 3, false).then((xpto) => console.log(xpto))
+  
   const [ausenciaAnterior, setAusenciaAnterior] = useState([])
   const lblAusenciaAnterior = [
     { name:"Vendedor", selector: row => row.vendedor},
@@ -61,7 +66,6 @@ export default function AusenciaFunc () {
     { name:"Justificativa", selector: row => row.justificativa}
 ]
 
-  const [funcionario] = [{IDFUNC: '8691', NOME: 'Leonardo', APELIDO: 'LEO'}, {IDFUNC: '3483', NOME: 'Marcelo Cavichioli', APELIDO: 'CAVI'}]
   const fp = useRef(null)
 
    async function fetchLoja () {
@@ -70,7 +74,7 @@ export default function AusenciaFunc () {
   
      if (resp.ok) {
         const lojas =  await resp.json()
-        console.log("<LOJAS>", lojas)
+        //console.log("<LOJAS>", lojas)
         setLoj(lojas)
         //setVendedor(lojas)
      } else console.log(`ERRO:${(resp.text())}`)
@@ -128,17 +132,16 @@ export default function AusenciaFunc () {
     console.log("<FORM>:", vendedorSelecionado)
     console.log("<FORM>:", lojaSelecionada)
     console.log("<FORM>:", ausencia)
-    console.log("<FP>:", fp.selectedDates)
+    console.log("<FP>:", periodoAusencia)
 
-
-
-    formObject.loja = lojaSelecionada
-    formObject.vendedor = vendedorSelecionado
-    formObject.motivo = ausencia
+    formObject.loja = loj[loj.findIndex(p => p.SG === lojaSelecionada)].CCUSTO
+    formObject.vendedor = vendedor[vendedor.findIndex(v => v.APELIDO === vendedorSelecionado)].IDFUNC
+formObject.motivo = ausencia
+formObject.dt_inicio = periodoAusencia[0]
+formObject.dt_fim = periodoAusencia[(periodoAusencia.length - 1)]
 
     setFormObject({...formObject})
 
-    
     console.log("Form:", formObject)
     alert(JSON.stringify(formObject, null, '  '))
   }
@@ -151,7 +154,7 @@ export default function AusenciaFunc () {
       <div>
         <hr/>
         <DataTable
-          columns={lblAusenciaAnterior}
+          //columns=""//{lblAusenciaAnterior}
           data={ausenciaAnterior}
           responsive={true}
         />
@@ -165,7 +168,7 @@ export default function AusenciaFunc () {
           <Container>
           <Card>
             <CardBody >
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="flex-md-column">
 
               <ListaValores id='selLoja' colFiltro='SG' placeholder='Escolha na lista' label="LOJA" lista={loj} x={setLojaSelecionada} 
               className='form-control'/>
@@ -175,9 +178,10 @@ export default function AusenciaFunc () {
 
               <Row>
                 <InputGroup >
-                  <Calendar  size={32}/>
+                  {/* <Calendar  size={32}/> */}
                   <Label className='form-label' for="periodoAusencia" >PERÍODO</Label>
-                 <Flatpickr  options={options} ref={fp} className='form-control flatpicker-input' name="periodoAusencia" onChange={e => console.log(e.selectedDates)}/>
+                 <Flatpickr  options={options} ref={fp} className='form-control flatpicker-input' name="periodoAusencia" 
+                 onChange={function(selectedDates, dateStr, instance) { setPeriodoAusencia(selectedDates) }}/>
                  </InputGroup>
               </Row>
 
@@ -187,7 +191,12 @@ export default function AusenciaFunc () {
               <Label className='form-label' for="justificativaAusencia" >JUSTIFICATIVA</Label>
                       <Input  className='form-control' type="text" placeholder='' required={true} onChange={e => setFormObject({ justificativa: e.target.value })}/>
 
-                <Button  color='primary' id="submitAusencia" type='submit'>SALVAR</Button>
+                <Button  color='primary' id="submitAusencia" type='submit' >SALVAR</Button>
+                {/* <Button  color='secondary' id="testAPI" onClick={e => LojaAPI.getLojasStar(false).then((xpto) => console.log(xpto))} >SALVAR</Button> */}
+                
+                {/* <Button  color='secondary' id="testAPI" onClick={e => LojaAPI.getLojasStarPaginated({limit: 5, offset: 3}, false).then((xpto) => console.log(xpto))} > */}
+                <Button  color='secondary' id="testAPI" onClick={e => PessoaAPI.getAllFuncionarios(false).then((xpto) => console.log(xpto))} >  
+                  SALVAR</Button>
                 </Form>
             </CardBody>
           </Card>

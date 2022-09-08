@@ -3,7 +3,7 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'HSTERN',
+    appName: '',
     //appLogoImage: require('@src/assets/images/logo/logo.svg').default
     appLogoImage: require('@src/assets/images/logo/hstern.png').default
   },

@@ -10,22 +10,19 @@ import { useState, Fragment, useEffect } from 'react'
   const [valListaSelec, setvalListaSelec] = useState()
   let sel
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log(`ValorSelecionadoLOV:${valListaSelec}`)
     //XPTO(valListaSelec)
-  }, [valListaSelec])
+  }, [valListaSelec]) */
 
 
   const valSelecionado = (item) => {
       sel = item
       setvalListaSelec(sel)  
-      console.log(`LOV:${sel}`)
+     // console.log(`LOV:${sel}`)
   
       props.x(sel)
       //console.log('props obj:', props)
-  }
-
-  const valorLOV = (item) => {
   }
 
   return (
